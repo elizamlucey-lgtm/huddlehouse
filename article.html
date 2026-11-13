@@ -1,417 +1,459 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation | Huddlehouse</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation | Huddlehouse</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <style>
-        .academy-collapsible-section {
-            margin: 20px 0;
-            border: 1px solid #e1e8df;
-            border-radius: 14px;
-            background: #ffffff;
-            overflow: hidden;
-        }
+  <style>
+    .academy-collapsible-section {
+      margin: 20px 0;
+      border: 1px solid #e1e8df;
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+    }
 
-        .academy-collapsible-section > summary {
-            padding: 18px 22px;
-            background: #f3f7f3;
-            color: #354b3a;
-            font-size: 1.08rem;
-            font-weight: 700;
-            cursor: pointer;
-            list-style-position: inside;
-            transition: background 0.2s ease;
-        }
+    .academy-collapsible-section > summary {
+      padding: 18px 22px;
+      background: #f3f7f3;
+      color: #354b3a;
+      font-size: 1.08rem;
+      font-weight: 700;
+      cursor: pointer;
+      list-style-position: inside;
+      transition: background 0.2s ease;
+    }
 
-        .academy-collapsible-section > summary:hover {
-            background: #eaf2ec;
-        }
+    .academy-collapsible-section > summary:hover {
+      background: #eaf2ec;
+    }
 
-        .academy-collapsible-section[open] > summary {
-            border-bottom: 1px solid #e1e8df;
-        }
+    .academy-collapsible-section[open] > summary {
+      border-bottom: 1px solid #e1e8df;
+    }
 
-        .academy-collapsible-content {
-            padding: 20px 22px;
-        }
+    .academy-collapsible-content {
+      padding: 20px 22px;
+    }
 
-        .academy-collapsible-content > :first-child { margin-top: 0; }
-        .academy-collapsible-content > :last-child { margin-bottom: 0; }
+    .academy-collapsible-content > :first-child { margin-top: 0; }
+    .academy-collapsible-content > :last-child { margin-bottom: 0; }
 
-        .academy-collapsible-section > summary:focus-visible {
-            outline: 3px solid #8ba995;
-            outline-offset: -3px;
-        }
+    .academy-collapsible-section > summary:focus-visible {
+      outline: 3px solid #8ba995;
+      outline-offset: -3px;
+    }
 
-        @media (max-width: 600px) {
-            .academy-collapsible-section > summary {
-                padding: 15px;
-                font-size: 1rem;
-            }
+    @media (max-width: 600px) {
+      .academy-collapsible-section > summary {
+        padding: 15px;
+        font-size: 1rem;
+      }
 
-            .academy-collapsible-content { padding: 16px; }
-        }
-    </style>
+      .academy-collapsible-content { padding: 16px; }
+    }
+  </style>
 </head>
 
 <body>
-    <header class="site-header">
-        <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+  <header class="site-header">
+    <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
 
-        <nav class="main-nav" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="huddle.html" id="nav-huddle">Huddle</a>
-            <a href="projects.html">Projects</a>
-            <a href="library.html" id="nav-library">Library</a>
-            <a href="developer.html" id="nav-developer">Developer Hub</a>
-            <a href="academy.html" id="nav-academy">Academy</a>
-        </nav>
-    </header>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="huddle.html" id="nav-huddle">Huddle</a>
+      <a href="projects.html" id="nav-projects">Projects</a>
+      <a href="library.html" id="nav-library">Library</a>
+      <a href="developer.html" id="nav-developer">Developer Hub</a>
+      <a href="academy.html" id="nav-academy">Academy</a>
+    </nav>
+  </header>
 
-    <main class="article-layout">
-        <aside class="article-sidebar">
-            <a href="developer.html" class="back-link" id="back-link">← Back to Developer Hub</a>
-            <h3 id="sidebar-heading">Developer Hub</h3>
-            <nav class="article-nav" id="article-nav"></nav>
-        </aside>
+  <main class="article-layout">
+    <aside class="article-sidebar">
+      <a href="developer.html" class="back-link" id="back-link">← Back to Developer Hub</a>
+      <h3 id="sidebar-heading">Developer Hub</h3>
+      <nav class="article-nav" id="article-nav"></nav>
+    </aside>
 
-        <article class="article-content">
-            <div id="article-breadcrumb">
-                <a href="developer.html">Developer Hub</a> / Documentation
-            </div>
+    <article class="article-content">
+      <div id="article-breadcrumb">
+        <a href="developer.html">Developer Hub</a> / Documentation
+      </div>
 
-            <div id="markdown-content">
-                <p>Loading documentation...</p>
-            </div>
-        </article>
-    </main>
+      <div id="markdown-content">
+        <p>Loading documentation...</p>
+      </div>
+    </article>
+  </main>
 
-    <footer class="site-footer">
-        <p>© 2026 Huddlehouse. Good work happens together.</p>
-    </footer>
+  <footer class="site-footer">
+    <p>© 2026 Huddlehouse. Good work happens together.</p>
+  </footer>
 
-    <script>
-        const documents = {
-            // Library
-            "index": {
-                file: "docs/library/index.md",
-                title: "Library Overview",
-                section: "library"
-            },
-            "getting-started": {
-                file: "docs/library/getting-started.md",
-                title: "Getting Started with Huddlehouse",
-                section: "library"
-            },
-            "troubleshooting": {
-                file: "docs/library/troubleshooting.md",
-                title: "Troubleshooting Huddlehouse",
-                section: "library"
-            },
+  <script>
+    const documents = {
+      // Library
+      "index": {
+        file: "docs/library/index.md",
+        title: "Library Overview",
+        section: "library"
+      },
+      "getting-started": {
+        file: "docs/library/getting-started.md",
+        title: "Getting Started with Huddlehouse",
+        section: "library"
+      },
+      "troubleshooting": {
+        file: "docs/library/troubleshooting.md",
+        title: "Troubleshooting Huddlehouse",
+        section: "library"
+      },
 
-            // Developer Hub
-            "developer-overview": {
-                file: "docs/developer/index.md",
-                title: "Developer Hub Overview",
-                section: "developer"
-            },
-            "quickstart": {
-                file: "docs/developer/quickstart.md",
-                title: "API Quickstart",
-                section: "developer"
-            },
-            "authentication": {
-                file: "docs/developer/authentication.md",
-                title: "API Authentication",
-                section: "developer"
-            },
-            "api-reference": {
-                file: "docs/developer/api-reference.md",
-                title: "API Reference",
-                section: "developer"
-            },
-            "errors": {
-                file: "docs/developer/errors.md",
-                title: "Errors & Troubleshooting",
-                section: "developer"
-            },
+      // Developer Hub
+      "developer-overview": {
+        file: "docs/developer/index.md",
+        title: "Developer Hub Overview",
+        section: "developer"
+      },
+      "quickstart": {
+        file: "docs/developer/quickstart.md",
+        title: "API Quickstart",
+        section: "developer"
+      },
+      "authentication": {
+        file: "docs/developer/authentication.md",
+        title: "API Authentication",
+        section: "developer"
+      },
+      "api-reference": {
+        file: "docs/developer/api-reference.md",
+        title: "API Reference",
+        section: "developer"
+      },
+      "errors": {
+        file: "docs/developer/errors.md",
+        title: "Errors & Troubleshooting",
+        section: "developer"
+      },
 
-            // Academy
-            "academy-getting-started": {
-                file: "docs/academy/getting-started.md",
-                title: "Getting Started with Huddlehouse",
-                section: "academy"
-            },
-            "team-collaboration": {
-                file: "docs/academy/team-collaboration.md",
-                title: "Team Collaboration",
-                section: "academy"
-            },
-            "developer-workflows": {
-                file: "docs/academy/developer-workflows.md",
-                title: "Developer Workflows",
-                section: "academy"
-            },
+      // Academy
+      "academy-getting-started": {
+        file: "docs/academy/getting-started.md",
+        title: "Getting Started with Huddlehouse",
+        section: "academy"
+      },
+      "team-collaboration": {
+        file: "docs/academy/team-collaboration.md",
+        title: "Team Collaboration",
+        section: "academy"
+      },
+      "developer-workflows": {
+        file: "docs/academy/developer-workflows.md",
+        title: "Developer Workflows",
+        section: "academy"
+      },
 
-            // Huddle
-            "huddle-overview": {
-                file: "docs/huddle/index.md",
-                title: "Huddle Overview",
-                section: "huddle"
-            },
-            "huddle-style-guide": {
-                file: "docs/huddle/style-guide.md",
-                title: "Documentation Style Guide",
-                section: "huddle"
-            },
-            "huddle-ai-guidelines": {
-                file: "docs/huddle/ai-guidelines.md",
-                title: "AI Usage Guidelines",
-                section: "huddle"
-            },
-            "huddle-feedback": {
-                file: "docs/huddle/customer-feedback.md",
-                title: "Customer Feedback and Issue Triage",
-                section: "huddle"
-            },
-            "huddle-release-communications": {
-                file: "docs/huddle/release-communications.md",
-                title: "Release Communications",
-                section: "huddle"
-            }
+      // Huddle
+      "huddle-overview": {
+        file: "docs/huddle/index.md",
+        title: "Huddle Overview",
+        section: "huddle"
+      },
+      "huddle-style-guide": {
+        file: "docs/huddle/style-guide.md",
+        title: "Documentation Style Guide",
+        section: "huddle"
+      },
+      "huddle-ai-guidelines": {
+        file: "docs/huddle/ai-guidelines.md",
+        title: "AI Usage Guidelines",
+        section: "huddle"
+      },
+      "huddle-feedback": {
+        file: "docs/huddle/customer-feedback.md",
+        title: "Customer Feedback and Issue Triage",
+        section: "huddle"
+      },
+      "huddle-release-communications": {
+        file: "docs/huddle/release-communications.md",
+        title: "Release Communications",
+        section: "huddle"
+      },
+
+      // Projects
+      "projects-overview": {
+        file: "docs/projects/index.md",
+        title: "Projects Overview",
+        section: "projects"
+      },
+      "projects-ai-review-playbook": {
+        file: "docs/ai-review-playbook.md",
+        title: "AI Review Playbook",
+        section: "projects"
+      }
+    };
+
+    const libraryNavigation = `
+      <a href="article.html?doc=index">Library Overview</a>
+      <a href="article.html?doc=getting-started">Getting Started</a>
+      <a href="article.html?doc=troubleshooting">Troubleshooting</a>
+    `;
+
+    const developerNavigation = `
+      <a href="article.html?doc=developer-overview">Developer Hub Overview</a>
+      <a href="article.html?doc=quickstart">API Quickstart</a>
+      <a href="article.html?doc=authentication">Authentication</a>
+      <a href="article.html?doc=api-reference">API Reference</a>
+      <a href="article.html?doc=errors">Errors & Troubleshooting</a>
+    `;
+
+    const academyNavigation = `
+      <a href="article.html?doc=academy-getting-started">Getting Started</a>
+      <a href="article.html?doc=team-collaboration">Team Collaboration</a>
+      <a href="article.html?doc=developer-workflows">Developer Workflows</a>
+    `;
+
+    const huddleNavigation = `
+      <a href="article.html?doc=huddle-overview">Huddle Overview</a>
+      <a href="article.html?doc=huddle-style-guide">Documentation Style Guide</a>
+      <a href="article.html?doc=huddle-ai-guidelines">AI Usage Guidelines</a>
+      <a href="article.html?doc=huddle-feedback">Customer Feedback</a>
+      <a href="article.html?doc=huddle-release-communications">Release Communications</a>
+    `;
+
+    const projectsNavigation = `
+      <a href="article.html?doc=projects-overview">Projects Overview</a>
+      <a href="article.html?doc=projects-ai-review-playbook">AI Review Playbook</a>
+      <a href="article.html?doc=huddle-style-guide">Documentation Style Guide</a>
+      <a href="article.html?doc=huddle-ai-guidelines">AI Usage Guidelines</a>
+    `;
+
+    function makeAcademySectionsCollapsible(content) {
+      const headings = Array.from(content.querySelectorAll("h2"));
+
+      headings.forEach(heading => {
+        const headingText = heading.textContent.trim();
+
+        if (!/^\d+\./.test(headingText)) return;
+        if (heading.closest("details")) return;
+
+        const details = document.createElement("details");
+        details.className = "academy-collapsible-section";
+
+        const summary = document.createElement("summary");
+        summary.textContent = headingText;
+
+        const sectionContent = document.createElement("div");
+        sectionContent.className = "academy-collapsible-content";
+
+        content.insertBefore(details, heading);
+        details.appendChild(summary);
+        details.appendChild(sectionContent);
+        heading.remove();
+
+        let nextNode = details.nextSibling;
+
+        while (
+          nextNode &&
+          !(
+            nextNode.nodeType === Node.ELEMENT_NODE &&
+            nextNode.tagName === "H2"
+          )
+        ) {
+          const currentNode = nextNode;
+          nextNode = nextNode.nextSibling;
+          sectionContent.appendChild(currentNode);
+        }
+      });
+    }
+
+    function updateArticleLinks(content, article) {
+      content.querySelectorAll("a").forEach(link => {
+        const href = link.getAttribute("href");
+
+        if (
+          !href ||
+          href.startsWith("#") ||
+          href.startsWith("http") ||
+          href.startsWith("mailto:") ||
+          href.startsWith("article.html")
+        ) {
+          return;
+        }
+
+        const cleanHref = href.replace(/\.md$/, "");
+        const filename = cleanHref.split("/").pop();
+
+        const academyLinks = {
+          "team-collaboration": "team-collaboration",
+          "developer-workflows": "developer-workflows",
+          "getting-started": "academy-getting-started",
+          "../library/index": "index",
+          "../developer/index": "developer-overview"
         };
 
-        const libraryNavigation = `
-            <a href="article.html?doc=index">Library Overview</a>
-            <a href="article.html?doc=getting-started">Getting Started</a>
-            <a href="article.html?doc=troubleshooting">Troubleshooting</a>
-        `;
+        const huddleLinks = {
+          "index": "huddle-overview",
+          "style-guide": "huddle-style-guide",
+          "ai-guidelines": "huddle-ai-guidelines",
+          "customer-feedback": "huddle-feedback",
+          "release-communications": "huddle-release-communications"
+        };
 
-        const developerNavigation = `
-            <a href="article.html?doc=developer-overview">Developer Hub Overview</a>
-            <a href="article.html?doc=quickstart">API Quickstart</a>
-            <a href="article.html?doc=authentication">Authentication</a>
-            <a href="article.html?doc=api-reference">API Reference</a>
-            <a href="article.html?doc=errors">Errors & Troubleshooting</a>
-        `;
+        const projectsLinks = {
+          "index": "projects-overview",
+          "ai-review-playbook": "projects-ai-review-playbook",
+          "style-guide": "huddle-style-guide",
+          "ai-guidelines": "huddle-ai-guidelines"
+        };
 
-        const academyNavigation = `
-            <a href="article.html?doc=academy-getting-started">Getting Started</a>
-            <a href="article.html?doc=team-collaboration">Team Collaboration</a>
-            <a href="article.html?doc=developer-workflows">Developer Workflows</a>
-        `;
-
-        const huddleNavigation = `
-            <a href="article.html?doc=huddle-overview">Huddle Overview</a>
-            <a href="article.html?doc=huddle-style-guide">Documentation Style Guide</a>
-            <a href="article.html?doc=huddle-ai-guidelines">AI Usage Guidelines</a>
-            <a href="article.html?doc=huddle-feedback">Customer Feedback</a>
-            <a href="article.html?doc=huddle-release-communications">Release Communications</a>
-        `;
-
-        function makeAcademySectionsCollapsible(content) {
-            const headings = Array.from(content.querySelectorAll("h2"));
-
-            headings.forEach(heading => {
-                const headingText = heading.textContent.trim();
-
-                if (!/^\d+\./.test(headingText)) return;
-                if (heading.closest("details")) return;
-
-                const details = document.createElement("details");
-                details.className = "academy-collapsible-section";
-
-                const summary = document.createElement("summary");
-                summary.textContent = headingText;
-
-                const sectionContent = document.createElement("div");
-                sectionContent.className = "academy-collapsible-content";
-
-                content.insertBefore(details, heading);
-                details.appendChild(summary);
-                details.appendChild(sectionContent);
-                heading.remove();
-
-                let nextNode = details.nextSibling;
-
-                while (
-                    nextNode &&
-                    !(
-                        nextNode.nodeType === Node.ELEMENT_NODE &&
-                        nextNode.tagName === "H2"
-                    )
-                ) {
-                    const currentNode = nextNode;
-                    nextNode = nextNode.nextSibling;
-                    sectionContent.appendChild(currentNode);
-                }
-            });
+        if (article.section === "academy" && academyLinks[cleanHref]) {
+          link.href = "article.html?doc=" +
+            encodeURIComponent(academyLinks[cleanHref]);
+          return;
         }
 
-        function updateArticleLinks(content, article) {
-            content.querySelectorAll("a").forEach(link => {
-                const href = link.getAttribute("href");
-
-                if (
-                    !href ||
-                    href.startsWith("#") ||
-                    href.startsWith("http") ||
-                    href.startsWith("mailto:")
-                ) {
-                    return;
-                }
-
-                const cleanHref = href.replace(/\.md$/, "");
-                const filename = cleanHref.split("/").pop();
-
-                const academyLinks = {
-                    "team-collaboration": "team-collaboration",
-                    "developer-workflows": "developer-workflows",
-                    "getting-started": "academy-getting-started",
-                    "../library/index": "index",
-                    "../developer/index": "developer-overview"
-                };
-
-                const huddleLinks = {
-                    "index": "huddle-overview",
-                    "style-guide": "huddle-style-guide",
-                    "ai-guidelines": "huddle-ai-guidelines",
-                    "customer-feedback": "huddle-feedback",
-                    "release-communications": "huddle-release-communications"
-                };
-
-                if (article.section === "academy" && academyLinks[cleanHref]) {
-                    link.href = "article.html?doc=" +
-                        encodeURIComponent(academyLinks[cleanHref]);
-                    return;
-                }
-
-                if (article.section === "huddle" && huddleLinks[filename]) {
-                    link.href = "article.html?doc=" +
-                        encodeURIComponent(huddleLinks[filename]);
-                    return;
-                }
-
-                if (href.endsWith(".md")) {
-                    const targetDoc =
-                        article.section === "academy" && filename === "getting-started"
-                            ? "academy-getting-started"
-                            : filename;
-
-                    if (documents[targetDoc]) {
-                        link.href = "article.html?doc=" +
-                            encodeURIComponent(targetDoc);
-                    }
-                }
-            });
+        if (article.section === "huddle" && huddleLinks[filename]) {
+          link.href = "article.html?doc=" +
+            encodeURIComponent(huddleLinks[filename]);
+          return;
         }
 
-        async function loadArticle() {
-            const params = new URLSearchParams(window.location.search);
-            const doc = params.get("doc");
-            const article = documents[doc];
-
-            const content = document.getElementById("markdown-content");
-            const breadcrumb = document.getElementById("article-breadcrumb");
-            const sidebarHeading = document.getElementById("sidebar-heading");
-            const articleNav = document.getElementById("article-nav");
-            const backLink = document.getElementById("back-link");
-
-            if (!article) {
-                content.innerHTML =
-                    "<h1>Article not found</h1>" +
-                    "<p>Select a resource from the Library, Huddle, Developer Hub, or Academy.</p>";
-                return;
-            }
-
-            const sectionNames = {
-                library: "Library",
-                developer: "Developer Hub",
-                academy: "Academy",
-                huddle: "Huddle"
-            };
-
-            const sectionLinks = {
-                library: "library.html",
-                developer: "developer.html",
-                academy: "academy.html",
-                huddle: "huddle.html"
-            };
-
-            const sectionNavigation = {
-                library: libraryNavigation,
-                developer: developerNavigation,
-                academy: academyNavigation,
-                huddle: huddleNavigation
-            };
-
-            const sectionName = sectionNames[article.section];
-            const sectionLink = sectionLinks[article.section];
-
-            document.title = article.title + " | Huddlehouse";
-
-            sidebarHeading.textContent = sectionName;
-            articleNav.innerHTML = sectionNavigation[article.section];
-
-            backLink.href = sectionLink;
-            backLink.textContent = "← Back to " + sectionName;
-
-            document.getElementById("nav-library").classList.toggle(
-                "active", article.section === "library"
-            );
-
-            document.getElementById("nav-developer").classList.toggle(
-                "active", article.section === "developer"
-            );
-
-            document.getElementById("nav-academy").classList.toggle(
-                "active", article.section === "academy"
-            );
-
-            const huddleNav = document.getElementById("nav-huddle");
-            if (huddleNav) {
-                huddleNav.classList.toggle("active", article.section === "huddle");
-            }
-
-            try {
-                const response = await fetch(article.file);
-
-                if (!response.ok) {
-                    throw new Error("Documentation could not be loaded.");
-                }
-
-                const markdown = await response.text();
-                content.innerHTML = marked.parse(markdown);
-
-                if (
-                    doc === "team-collaboration" ||
-                    doc === "developer-workflows"
-                ) {
-                    makeAcademySectionsCollapsible(content);
-                }
-
-                updateArticleLinks(content, article);
-
-                breadcrumb.innerHTML =
-                    '<a href="' + sectionLink + '">' +
-                    sectionName +
-                    '</a> / ' +
-                    article.title;
-
-            } catch (error) {
-                console.error("Documentation loading error:", error);
-
-                content.innerHTML =
-                    "<h1>Unable to load documentation</h1>" +
-                    "<p>Check that the documentation file exists and try refreshing the page.</p>";
-            }
+        if (article.section === "projects" && projectsLinks[filename]) {
+          link.href = "article.html?doc=" +
+            encodeURIComponent(projectsLinks[filename]);
+          return;
         }
 
-        loadArticle();
-    </script>
+        if (href.endsWith(".md")) {
+          const targetDoc =
+            article.section === "academy" && filename === "getting-started"
+              ? "academy-getting-started"
+              : filename;
+
+          if (documents[targetDoc]) {
+            link.href = "article.html?doc=" +
+              encodeURIComponent(targetDoc);
+          }
+        }
+      });
+    }
+
+    async function loadArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const doc = params.get("doc");
+      const article = documents[doc];
+
+      const content = document.getElementById("markdown-content");
+      const breadcrumb = document.getElementById("article-breadcrumb");
+      const sidebarHeading = document.getElementById("sidebar-heading");
+      const articleNav = document.getElementById("article-nav");
+      const backLink = document.getElementById("back-link");
+
+      if (!article) {
+        content.innerHTML =
+          "<h1>Article not found</h1>" +
+          "<p>Select a resource from the Library, Huddle, Projects, Developer Hub, or Academy.</p>";
+        return;
+      }
+
+      const sectionNames = {
+        library: "Library",
+        developer: "Developer Hub",
+        academy: "Academy",
+        huddle: "Huddle",
+        projects: "Projects"
+      };
+
+      const sectionLinks = {
+        library: "library.html",
+        developer: "developer.html",
+        academy: "academy.html",
+        huddle: "huddle.html",
+        projects: "projects.html"
+      };
+
+      const sectionNavigation = {
+        library: libraryNavigation,
+        developer: developerNavigation,
+        academy: academyNavigation,
+        huddle: huddleNavigation,
+        projects: projectsNavigation
+      };
+
+      const sectionName = sectionNames[article.section];
+      const sectionLink = sectionLinks[article.section];
+
+      document.title = article.title + " | Huddlehouse";
+
+      sidebarHeading.textContent = sectionName;
+      articleNav.innerHTML = sectionNavigation[article.section];
+
+      backLink.href = sectionLink;
+      backLink.textContent = "← Back to " + sectionName;
+
+      document.getElementById("nav-library").classList.toggle(
+        "active", article.section === "library"
+      );
+
+      document.getElementById("nav-developer").classList.toggle(
+        "active", article.section === "developer"
+      );
+
+      document.getElementById("nav-academy").classList.toggle(
+        "active", article.section === "academy"
+      );
+
+      const huddleNav = document.getElementById("nav-huddle");
+      if (huddleNav) {
+        huddleNav.classList.toggle("active", article.section === "huddle");
+      }
+
+      const projectsNav = document.getElementById("nav-projects");
+      if (projectsNav) {
+        projectsNav.classList.toggle("active", article.section === "projects");
+      }
+
+      try {
+        const response = await fetch(article.file);
+
+        if (!response.ok) {
+          throw new Error("Documentation could not be loaded.");
+        }
+
+        const markdown = await response.text();
+        content.innerHTML = marked.parse(markdown);
+
+        if (
+          doc === "team-collaboration" ||
+          doc === "developer-workflows"
+        ) {
+          makeAcademySectionsCollapsible(content);
+        }
+
+        updateArticleLinks(content, article);
+
+        breadcrumb.innerHTML =
+          '<a href="' + sectionLink + '">' +
+          sectionName +
+          '</a> / ' +
+          article.title;
+
+      } catch (error) {
+        console.error("Documentation loading error:", error);
+
+        content.innerHTML =
+          "<h1>Unable to load documentation</h1>" +
+          "<p>Check that the documentation file exists and try refreshing the page.</p>";
+      }
+    }
+
+    loadArticle();
+  </script>
 </body>
 </html>

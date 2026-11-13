@@ -1,0 +1,2403 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan, review, and deliver documentation projects with Huddlehouse.">
+  <title>Projects | Huddlehouse</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .projects-page {
+      --project-ink: #20232b;
+      --project-muted: #626773;
+      --project-line: #e8e4dc;
+      --project-paper: #fbfaf7;
+      --project-green: #e5efe5;
+      --project-lavender: #eee7f8;
+      --project-yellow: #fff0cf;
+      --project-blue: #e5f0f6;
+      color: var(--project-ink);
+      background: var(--project-paper);
+      min-height: 100vh;
+    }
+
+    .projects-page * { box-sizing: border-box; }
+    .projects-page a { color: inherit; }
+
+    .projects-page button,
+    .projects-page input,
+    .projects-page select {
+      font: inherit;
+    }
+
+    .projects-shell {
+      width: min(1440px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 38px 0 64px;
+    }
+
+    .projects-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      color: var(--project-muted);
+      font-size: .88rem;
+    }
+
+    .projects-topline a {
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .projects-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(220px, .6fr);
+      align-items: center;
+      gap: 28px;
+      padding: 34px;
+      border: 1px solid var(--project-line);
+      border-radius: 24px;
+      background: linear-gradient(120deg, #f0f5ed, #f6f0fb 72%, #fff7e7);
+      margin-bottom: 26px;
+    }
+
+    .projects-eyebrow {
+      margin: 0 0 10px;
+      color: #58715c;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .projects-hero h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    .projects-hero p:not(.projects-eyebrow) {
+      max-width: 650px;
+      color: var(--project-muted);
+      line-height: 1.7;
+      margin: 15px 0 0;
+    }
+
+    .projects-hero-art {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .projects-hero-art img {
+      width: min(100%, 230px);
+      height: 190px;
+      object-fit: contain;
+    }
+
+    .prototype-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 13px 16px;
+      margin-bottom: 28px;
+      border: 1px solid #e7dfc9;
+      border-radius: 12px;
+      background: #fffaf0;
+      color: #665638;
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    .prototype-note strong { color: #4d4028; }
+
+    .project-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0 34px;
+    }
+
+    .summary-card {
+      padding: 19px;
+      border: 1px solid var(--project-line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--project-muted);
+      font-size: .82rem;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 1.8rem;
+      letter-spacing: -.04em;
+    }
+
+    .summary-card small {
+      display: block;
+      margin-top: 3px;
+      color: var(--project-muted);
+    }
+
+    .project-section { margin-top: 38px; }
+
+    .project-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 17px;
+    }
+
+    .project-section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      letter-spacing: -.035em;
+    }
+
+    .project-section-heading p {
+      margin: 5px 0 0;
+      color: var(--project-muted);
+      line-height: 1.5;
+    }
+
+    .board-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 18px 0;
+      padding: 15px;
+      border: 1px solid var(--project-line);
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .board-toolbar input,
+    .board-toolbar select {
+      min-height: 42px;
+      padding: 9px 12px;
+      border: 1px solid #dcd9d2;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--project-ink);
+    }
+
+    .board-toolbar input {
+      flex: 1 1 220px;
+      min-width: 180px;
+    }
+
+    .board-toolbar select { flex: 0 1 180px; }
+
+    .board-toolbar button,
+    .prompt-button {
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid #dcd9d2;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--project-ink);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .board-toolbar button:hover,
+    .prompt-button:hover { background: #f4f2ed; }
+
+    .filter-status {
+      flex-basis: 100%;
+      min-height: 18px;
+      color: var(--project-muted);
+      font-size: .82rem;
+    }
+
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .kanban-column {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--project-line);
+      border-radius: 16px;
+      background: #f4f2ed;
+    }
+
+    .kanban-column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 3px 13px;
+    }
+
+    .kanban-column-header h3 {
+      margin: 0;
+      font-size: .96rem;
+    }
+
+    .column-count {
+      display: inline-flex;
+      min-width: 25px;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--project-muted);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .task-list { display: grid; gap: 10px; }
+
+    .task-card {
+      padding: 14px;
+      border: 1px solid #e7e3dc;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(32,35,43,.035);
+    }
+
+    .task-card[hidden] { display: none; }
+
+    .task-card summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .task-card summary::-webkit-details-marker { display: none; }
+
+    .task-card summary:focus-visible,
+    .task-card button:focus-visible,
+    .board-toolbar input:focus-visible,
+    .board-toolbar select:focus-visible,
+    .release-checklist input:focus-visible,
+    .ai-lab button:focus-visible,
+    .ai-lab summary:focus-visible {
+      outline: 3px solid #8ba995;
+      outline-offset: 3px;
+    }
+
+    .task-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .task-type {
+      color: var(--project-muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .priority {
+      padding: 4px 7px;
+      border-radius: 20px;
+      font-size: .68rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .priority-high { background: #fbe5df; color: #8a3d2c; }
+    .priority-medium { background: #fff0cf; color: #76551c; }
+    .priority-low { background: #e7efe7; color: #46664d; }
+
+    .task-card h4 {
+      margin: 0;
+      font-size: .97rem;
+      line-height: 1.4;
+    }
+
+    .task-description {
+      margin: 9px 0 12px;
+      color: var(--project-muted);
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      color: var(--project-muted);
+      font-size: .76rem;
+    }
+
+    .task-details {
+      margin-top: 12px;
+      padding-top: 11px;
+      border-top: 1px solid var(--project-line);
+      color: var(--project-muted);
+      font-size: .82rem;
+      line-height: 1.6;
+    }
+
+    .task-details strong { color: var(--project-ink); }
+
+    .task-details ul {
+      padding-left: 18px;
+      margin: 7px 0 0;
+    }
+
+    .empty-column {
+      padding: 18px 10px;
+      color: var(--project-muted);
+      font-size: .82rem;
+      text-align: center;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .workflow-step {
+      padding: 16px 13px;
+      border: 1px solid var(--project-line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .workflow-step .step-number {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 11px;
+      border-radius: 50%;
+      background: var(--project-green);
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .workflow-step:nth-child(2) .step-number { background: var(--project-blue); }
+    .workflow-step:nth-child(3) .step-number { background: var(--project-lavender); }
+    .workflow-step:nth-child(4) .step-number { background: var(--project-yellow); }
+
+    .workflow-step h3 {
+      margin: 0 0 6px;
+      font-size: .92rem;
+    }
+
+    .workflow-step p {
+      margin: 0;
+      color: var(--project-muted);
+      font-size: .8rem;
+      line-height: 1.5;
+    }
+
+    .release-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .release-card,
+    .release-checklist {
+      padding: 22px;
+      border: 1px solid var(--project-line);
+      border-radius: 17px;
+      background: #fff;
+    }
+
+    .release-card h3,
+    .release-checklist h3 {
+      margin: 0 0 9px;
+      font-size: 1.1rem;
+    }
+
+    .release-card p {
+      color: var(--project-muted);
+      line-height: 1.6;
+    }
+
+    .release-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .release-meta div {
+      padding: 12px;
+      border-radius: 10px;
+      background: #f6f4ef;
+    }
+
+    .release-meta span {
+      display: block;
+      color: var(--project-muted);
+      font-size: .76rem;
+    }
+
+    .release-meta strong {
+      display: block;
+      margin-top: 4px;
+      font-size: .9rem;
+    }
+
+    .progress-track {
+      height: 9px;
+      overflow: hidden;
+      margin: 12px 0 17px;
+      border-radius: 20px;
+      background: #eeeae2;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #86a78b;
+      transition: width .2s ease;
+    }
+
+    .checklist-progress {
+      color: var(--project-muted);
+      font-size: .82rem;
+    }
+
+    .release-checklist label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-top: 1px solid #f0ede7;
+      color: var(--project-ink);
+      font-size: .87rem;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+
+    .release-checklist input {
+      margin-top: 3px;
+      accent-color: #6e9275;
+    }
+
+    /* AI LAB */
+
+    .ai-lab {
+      padding: 28px;
+      border: 1px solid #ded5ee;
+      border-radius: 22px;
+      background: linear-gradient(130deg, #f6f1fc, #fffaf0);
+    }
+
+    .ai-lab-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .ai-lab-header img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .ai-lab-header h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -.035em;
+    }
+
+    .ai-lab-header p {
+      margin: 5px 0 0;
+      color: var(--project-muted);
+      line-height: 1.55;
+    }
+
+    .ai-intro-banner {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      border: 1px solid #e5d9f1;
+      border-radius: 14px;
+      background: rgba(255,255,255,.85);
+      margin-bottom: 30px;
+    }
+
+    .ai-intro-icon {
+      display: flex;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--project-lavender);
+      font-size: 1.2rem;
+    }
+
+    .ai-intro-banner strong {
+      display: block;
+      line-height: 1.45;
+    }
+
+    .ai-intro-banner p {
+      margin: 5px 0 0;
+      color: var(--project-muted);
+      font-size: .87rem;
+      line-height: 1.5;
+    }
+
+    .ai-subsection {
+      margin-top: 34px;
+      padding-top: 27px;
+      border-top: 1px solid #e5deef;
+    }
+
+    .ai-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .ai-section-heading h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -.025em;
+    }
+
+    .ai-section-heading p:not(.projects-eyebrow) {
+      max-width: 700px;
+      margin: 6px 0 0;
+      color: var(--project-muted);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    .ai-section-icon {
+      display: flex;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      background: #fff;
+      font-size: 1.3rem;
+    }
+
+    .ai-prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .prompt-card {
+      padding: 18px;
+      border: 1px solid #e5deef;
+      border-radius: 14px;
+      background: rgba(255,255,255,.92);
+    }
+
+    .prompt-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .prompt-icon {
+      display: inline-flex;
+      width: 37px;
+      height: 37px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 11px;
+      background: #f0ebf8;
+      font-size: 1.1rem;
+    }
+
+    .prompt-category {
+      color: #716284;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .prompt-card h4 {
+      margin: 0 0 7px;
+      font-size: 1rem;
+    }
+
+    .prompt-card > p {
+      min-height: 64px;
+      margin: 0 0 14px;
+      color: var(--project-muted);
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+
+    .prompt-button {
+      min-height: 37px;
+      font-size: .8rem;
+    }
+
+    .prompt-preview {
+      margin-top: 13px;
+      padding-top: 11px;
+      border-top: 1px solid #eee9f3;
+      color: var(--project-muted);
+      font-size: .82rem;
+      line-height: 1.55;
+    }
+
+    .prompt-preview summary {
+      color: #65527b;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .prompt-preview p { margin: 9px 0; }
+    .prompt-preview small { display: block; }
+
+    .prompt-status {
+      min-height: 20px;
+      margin: 12px 0 0;
+      color: #46664d;
+      font-size: .83rem;
+    }
+
+    .ai-demo-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(190px, .35fr);
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .ai-demo-intro p {
+      margin: 0;
+      color: var(--project-muted);
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+
+    .ai-demo-tag {
+      padding: 11px 13px;
+      border: 1px solid #e5deef;
+      border-radius: 12px;
+      background: #fff;
+      color: #65527b;
+      font-size: .78rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .ai-review-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .ai-document-panel,
+    .ai-findings-panel {
+      min-width: 0;
+      padding: 19px;
+      border: 1px solid #e5deef;
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .ai-panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .ai-panel-heading h4 {
+      margin: 0;
+      font-size: .96rem;
+    }
+
+    .ai-panel-label {
+      color: var(--project-muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .sample-document {
+      padding: 17px;
+      border: 1px solid #ece8e0;
+      border-radius: 11px;
+      background: #fbfaf7;
+    }
+
+    .sample-document h5 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    .sample-document p {
+      margin: 0 0 12px;
+      color: #505561;
+      font-size: .86rem;
+      line-height: 1.7;
+    }
+
+    .sample-document p:last-child { margin-bottom: 0; }
+
+    .sample-document mark {
+      padding: 2px 3px;
+      border-radius: 3px;
+      background: #fff0cf;
+      color: #6b4d19;
+    }
+
+    .document-source-note {
+      margin-top: 12px;
+      color: var(--project-muted);
+      font-size: .76rem;
+      line-height: 1.5;
+    }
+
+    .run-review-button {
+      width: 100%;
+      min-height: 45px;
+      margin-top: 15px;
+      padding: 11px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #6d5a85;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .run-review-button:hover { background: #59466f; }
+
+    .demo-status {
+      min-height: 20px;
+      margin: 9px 0 0;
+      color: var(--project-muted);
+      font-size: .78rem;
+      line-height: 1.45;
+    }
+
+    .finding-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .finding-card {
+      padding: 13px;
+      border: 1px solid #e8e4dc;
+      border-radius: 11px;
+      background: #fff;
+    }
+
+    .finding-card[hidden] { display: none; }
+
+    .finding-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px;
+    }
+
+    .finding-severity {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .69rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .severity-critical { color: #a34332; }
+    .severity-warning { color: #8b681e; }
+    .severity-style { color: #66518a; }
+    .severity-info { color: #426a83; }
+
+    .finding-decision {
+      padding: 4px 7px;
+      border-radius: 20px;
+      background: #f0eee9;
+      color: #65615a;
+      font-size: .68rem;
+      font-weight: 800;
+    }
+
+    .finding-card h5 {
+      margin: 0 0 6px;
+      font-size: .9rem;
+    }
+
+    .finding-card > p {
+      margin: 0;
+      color: var(--project-muted);
+      font-size: .81rem;
+      line-height: 1.55;
+    }
+
+    .finding-card details {
+      margin-top: 10px;
+      padding-top: 9px;
+      border-top: 1px solid #f0ede7;
+    }
+
+    .finding-card details summary {
+      color: #65527b;
+      font-size: .79rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .finding-explanation {
+      margin-top: 9px;
+      color: var(--project-muted);
+      font-size: .8rem;
+      line-height: 1.55;
+    }
+
+    .finding-explanation strong {
+      color: var(--project-ink);
+    }
+
+    .finding-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .finding-actions button {
+      min-height: 33px;
+      padding: 7px 10px;
+      border: 1px solid #dedbd4;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--project-ink);
+      cursor: pointer;
+      font-size: .73rem;
+      font-weight: 800;
+    }
+
+    .finding-actions button:hover { background: #f4f2ed; }
+
+    .finding-actions .accept-action {
+      border-color: #c9ddca;
+      background: #edf5ed;
+      color: #3f6847;
+    }
+
+    .finding-actions .escalate-action {
+      border-color: #ead9b5;
+      background: #fff7e8;
+      color: #76551c;
+    }
+
+    .finding-actions button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .ai-results {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .ai-result-card {
+      padding: 13px;
+      border: 1px solid #e5deef;
+      border-radius: 11px;
+      background: #fff;
+    }
+
+    .ai-result-card span {
+      display: block;
+      color: var(--project-muted);
+      font-size: .72rem;
+    }
+
+    .ai-result-card strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 1.45rem;
+    }
+
+    .ai-result-card.accepted strong { color: #47764d; }
+    .ai-result-card.rejected strong { color: #765b85; }
+    .ai-result-card.escalated strong { color: #9a7024; }
+
+    .ai-result-card small {
+      display: block;
+      margin-top: 3px;
+      color: var(--project-muted);
+      font-size: .7rem;
+    }
+
+    .ai-review-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .ai-review-actions p {
+      margin: 0;
+      color: var(--project-muted);
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+
+    .reset-review-button {
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid #dedbd4;
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .ai-empty-state {
+      padding: 24px 12px;
+      border: 1px dashed #d9d0e5;
+      border-radius: 11px;
+      color: var(--project-muted);
+      font-size: .84rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .before-after-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .before-after-card {
+      padding: 18px;
+      border: 1px solid #e5deef;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .before-after-label {
+      display: inline-block;
+      margin-bottom: 11px;
+      padding: 5px 8px;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .before-label {
+      background: #fff0cf;
+      color: #76551c;
+    }
+
+    .after-label {
+      background: #e5efe5;
+      color: #46664d;
+    }
+
+    .before-after-card blockquote {
+      margin: 0;
+      color: var(--project-ink);
+      font-size: .94rem;
+      line-height: 1.7;
+    }
+
+    .before-after-card p {
+      margin: 12px 0 0;
+      color: var(--project-muted);
+      font-size: .8rem;
+      line-height: 1.55;
+    }
+
+    .ai-guardrails {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .guardrail {
+      padding: 15px;
+      border: 1px solid #e5deef;
+      border-radius: 12px;
+      background: rgba(255,255,255,.85);
+    }
+
+    .guardrail strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: .86rem;
+    }
+
+    .guardrail span {
+      color: var(--project-muted);
+      font-size: .8rem;
+      line-height: 1.5;
+    }
+
+    .ai-takeaway {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      margin-top: 20px;
+      padding: 19px;
+      border: 1px solid #d8e5d8;
+      border-radius: 14px;
+      background: #f0f6ef;
+    }
+
+    .ai-takeaway-icon {
+      font-size: 1.6rem;
+    }
+
+    .ai-takeaway strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .ai-takeaway p {
+      margin: 0;
+      color: #536456;
+      font-size: .87rem;
+      line-height: 1.6;
+    }
+
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .resource-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 13px;
+      border: 1px solid var(--project-line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--project-ink);
+      font-size: .84rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .resource-links a:hover { background: #f4f2ed; }
+
+    .project-footer-note {
+      margin-top: 35px;
+      padding: 18px;
+      border-radius: 14px;
+      background: #f0f3ed;
+      color: #4c6250;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 1050px) {
+      .kanban-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workflow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .projects-shell {
+        width: min(100% - 30px, 680px);
+        padding-top: 24px;
+      }
+
+      .projects-hero {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      .projects-hero-art { justify-content: flex-start; }
+
+      .projects-hero-art img {
+        width: 150px;
+        height: 120px;
+      }
+
+      .project-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .release-grid { grid-template-columns: 1fr; }
+      .ai-guardrails { grid-template-columns: 1fr; }
+
+      .ai-review-workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-demo-intro {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .projects-topline {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .kanban-board { grid-template-columns: 1fr; }
+      .workflow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ai-prompt-grid { grid-template-columns: 1fr; }
+      .ai-lab { padding: 18px; }
+
+      .ai-lab-header {
+        align-items: flex-start;
+      }
+
+      .ai-lab-header img {
+        width: 68px;
+        height: 68px;
+      }
+
+      .project-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .ai-results {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .before-after-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-section-heading {
+        align-items: flex-start;
+      }
+
+      .finding-actions button {
+        flex: 1 1 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="huddle.html">Huddle</a>
+      <a href="projects.html" class="active" aria-current="page">Projects</a>
+      <a href="library.html">Library</a>
+      <a href="developer.html">Developer Hub</a>
+      <a href="academy.html">Academy</a>
+    </nav>
+  </header>
+
+  <main class="projects-page">
+    <div class="projects-shell">
+
+      <div class="projects-topline">
+        <a href="index.html">← Back to Huddlehouse</a>
+        <span>Workspace / Documentation Projects</span>
+      </div>
+
+      <section class="projects-hero" aria-labelledby="projects-title">
+        <div>
+          <p class="projects-eyebrow">Plan it. Build it. Ship it.</p>
+          <h1 id="projects-title">Projects</h1>
+          <p>Turn documentation work into a clear, collaborative process. Track tasks, coordinate reviews, test instructions, and get release-ready with your team.</p>
+        </div>
+        <div class="projects-hero-art">
+          <img src="assets/mascot-2.png" alt="Pip the alien organizing a project checklist">
+        </div>
+      </section>
+
+      <div class="prototype-note">
+        <span aria-hidden="true">✦</span>
+        <div><strong>Portfolio prototype:</strong> This workspace uses fictional sample projects and simulated task data to demonstrate project planning, documentation workflows, and quality practices. It is not connected to a live project-management backend.</div>
+      </div>
+
+      <section class="project-summary" aria-label="Project summary">
+        <div class="summary-card">
+          <span>Open tasks</span>
+          <strong id="summary-open">8</strong>
+          <small>Across all workflow stages</small>
+        </div>
+        <div class="summary-card">
+          <span>In review</span>
+          <strong id="summary-review">2</strong>
+          <small>Technical and editorial checks</small>
+        </div>
+        <div class="summary-card">
+          <span>Ready to publish</span>
+          <strong id="summary-ready">2</strong>
+          <small>Final release checks remaining</small>
+        </div>
+        <div class="summary-card">
+          <span>Release milestone</span>
+          <strong>v2.8</strong>
+          <small>Documentation readiness</small>
+        </div>
+      </section>
+
+      <!-- PROJECT BOARD -->
+      <section class="project-section" aria-labelledby="board-title">
+        <div class="project-section-heading">
+          <div>
+            <h2 id="board-title">Documentation project board</h2>
+            <p>Follow each task from the backlog to publication.</p>
+          </div>
+          <span class="task-type">Sample workspace · Sprint 08</span>
+        </div>
+
+        <div class="board-toolbar" aria-label="Task filters">
+          <input id="task-search" type="search" placeholder="Search tasks, owners, or topics..." aria-label="Search project tasks">
+          <select id="status-filter" aria-label="Filter by workflow stage">
+            <option value="all">All workflow stages</option>
+            <option value="backlog">Backlog</option>
+            <option value="progress">In Progress</option>
+            <option value="review">In Review</option>
+            <option value="ready">Ready to Publish</option>
+          </select>
+          <select id="priority-filter" aria-label="Filter by priority">
+            <option value="all">All priorities</option>
+            <option value="high">High priority</option>
+            <option value="medium">Medium priority</option>
+            <option value="low">Low priority</option>
+          </select>
+          <button type="button" id="clear-filters">Clear filters</button>
+          <div class="filter-status" id="filter-status" aria-live="polite">Showing all 8 sample tasks.</div>
+        </div>
+
+        <div class="kanban-board" id="kanban-board">
+
+          <section class="kanban-column" data-column="backlog" aria-labelledby="backlog-heading">
+            <div class="kanban-column-header">
+              <h3 id="backlog-heading">Backlog</h3>
+              <span class="column-count">2</span>
+            </div>
+            <div class="task-list">
+
+              <details class="task-card" data-status="backlog" data-priority="medium">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">User guide</span>
+                    <span class="priority priority-medium">Medium</span>
+                  </div>
+                  <h4>Revise connection troubleshooting guide</h4>
+                  <p class="task-description">Use recent Support feedback to clarify common connection errors and diagnostic steps.</p>
+                  <div class="task-meta"><span>◉ Jordan</span><span>◷ Nov 20</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Acceptance criteria</strong>
+                  <ul>
+                    <li>Confirm common symptoms with Support.</li>
+                    <li>Document verified diagnostic steps.</li>
+                    <li>Link to relevant error reference content.</li>
+                  </ul>
+                  <p><strong>Dependency:</strong> Support feedback review.</p>
+                </div>
+              </details>
+
+              <details class="task-card" data-status="backlog" data-priority="low">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">Maintenance</span>
+                    <span class="priority priority-low">Low</span>
+                  </div>
+                  <h4>Audit older integration examples</h4>
+                  <p class="task-description">Identify examples that may need a compatibility or version check.</p>
+                  <div class="task-meta"><span>◉ Casey</span><span>◷ Nov 24</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Acceptance criteria</strong>
+                  <ul>
+                    <li>Inventory integration examples.</li>
+                    <li>Flag unclear or outdated version references.</li>
+                    <li>Request SME confirmation before editing.</li>
+                  </ul>
+                  <p><strong>Dependency:</strong> Current integration support matrix.</p>
+                </div>
+              </details>
+
+            </div>
+          </section>
+
+          <section class="kanban-column" data-column="progress" aria-labelledby="progress-heading">
+            <div class="kanban-column-header">
+              <h3 id="progress-heading">In Progress</h3>
+              <span class="column-count">2</span>
+            </div>
+            <div class="task-list">
+
+              <details class="task-card" data-status="progress" data-priority="high">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">CLI documentation</span>
+                    <span class="priority priority-high">High</span>
+                  </div>
+                  <h4>Update installation and CLI quickstart</h4>
+                  <p class="task-description">Validate the installation flow and explain the required command-line options.</p>
+                  <div class="task-meta"><span>◉ Morgan</span><span>◷ Nov 15</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Acceptance criteria</strong>
+                  <ul>
+                    <li>Test installation steps in a clean environment.</li>
+                    <li>Verify command syntax and flags with Engineering.</li>
+                    <li>Show expected output and common failure paths.</li>
+                  </ul>
+                  <p><strong>Dependency:</strong> Engineering confirmation of CLI behavior.</p>
+                </div>
+              </details>
+
+              <details class="task-card" data-status="progress" data-priority="medium">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">API documentation</span>
+                    <span class="priority priority-medium">Medium</span>
+                  </div>
+                  <h4>Refresh API request and response examples</h4>
+                  <p class="task-description">Check example payloads against the current API reference and error responses.</p>
+                  <div class="task-meta"><span>◉ Taylor</span><span>◷ Nov 17</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Acceptance criteria</strong>
+                  <ul>
+                    <li>Compare examples with the approved API schema.</li>
+                    <li>Validate required and optional fields.</li>
+                    <li>Check code formatting and response descriptions.</li>
+                  </ul>
+                  <p><strong>Dependency:</strong> Current API schema and sample responses.</p>
+                </div>
+              </details>
+
+            </div>
+          </section>
+
+          <section class="kanban-column" data-column="review" aria-labelledby="review-heading">
+            <div class="kanban-column-header">
+              <h3 id="review-heading">In Review</h3>
+              <span class="column-count">2</span>
+            </div>
+            <div class="task-list">
+
+              <details class="task-card" data-status="review" data-priority="high">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">Technical review</span>
+                    <span class="priority priority-high">High</span>
+                  </div>
+                  <h4>Verify configuration flag reference</h4>
+                  <p class="task-description">Engineering is checking option names, defaults, accepted values, and examples.</p>
+                  <div class="task-meta"><span>◉ Alex</span><span>◷ Nov 14</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Review focus</strong>
+                  <ul>
+                    <li>Confirm exact flag spelling and capitalization.</li>
+                    <li>Verify defaults and supported values.</li>
+                    <li>Confirm examples match current behavior.</li>
+                  </ul>
+                  <p><strong>Review owner:</strong> Engineering SME.</p>
+                </div>
+              </details>
+
+              <details class="task-card" data-status="review" data-priority="medium">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">Editorial review</span>
+                    <span class="priority priority-medium">Medium</span>
+                  </div>
+                  <h4>Review release notes for v2.8</h4>
+                  <p class="task-description">Check clarity, consistency, customer impact, and links to supporting documentation.</p>
+                  <div class="task-meta"><span>◉ Riley</span><span>◷ Nov 14</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Review focus</strong>
+                  <ul>
+                    <li>Confirm each change is approved for release.</li>
+                    <li>Explain the user impact in plain language.</li>
+                    <li>Check terminology and link destinations.</li>
+                  </ul>
+                  <p><strong>Dependency:</strong> Approved release details from Product.</p>
+                </div>
+              </details>
+
+            </div>
+          </section>
+
+          <section class="kanban-column" data-column="ready" aria-labelledby="ready-heading">
+            <div class="kanban-column-header">
+              <h3 id="ready-heading">Ready to Publish</h3>
+              <span class="column-count">2</span>
+            </div>
+            <div class="task-list">
+
+              <details class="task-card" data-status="ready" data-priority="low">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">Knowledge base</span>
+                    <span class="priority priority-low">Low</span>
+                  </div>
+                  <h4>Publish updated authentication FAQ</h4>
+                  <p class="task-description">Editorial and technical reviews are complete; final link check is recorded.</p>
+                  <div class="task-meta"><span>◉ Sam</span><span>◷ Nov 13</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Completion evidence</strong>
+                  <ul>
+                    <li>Authentication behavior verified.</li>
+                    <li>Style and accessibility checks complete.</li>
+                    <li>Publication links reviewed.</li>
+                  </ul>
+                  <p><strong>Next action:</strong> Include in the documentation release.</p>
+                </div>
+              </details>
+
+              <details class="task-card" data-status="ready" data-priority="medium">
+                <summary>
+                  <div class="task-topline">
+                    <span class="task-type">Developer guide</span>
+                    <span class="priority priority-medium">Medium</span>
+                  </div>
+                  <h4>Publish updated API error examples</h4>
+                  <p class="task-description">Examples have been checked against the API specification and reviewed.</p>
+                  <div class="task-meta"><span>◉ Jamie</span><span>◷ Nov 13</span></div>
+                </summary>
+                <div class="task-details">
+                  <strong>Completion evidence</strong>
+                  <ul>
+                    <li>Response examples validated.</li>
+                    <li>Error descriptions reviewed by Engineering.</li>
+                    <li>Cross-links and formatting checked.</li>
+                  </ul>
+                  <p><strong>Next action:</strong> Publish with the v2.8 documentation update.</p>
+                </div>
+              </details>
+
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- DELIVERY WORKFLOW -->
+      <section class="project-section" aria-labelledby="workflow-title">
+        <div class="project-section-heading">
+          <div>
+            <h2 id="workflow-title">The documentation delivery workflow</h2>
+            <p>Clear checkpoints help the team catch problems before customers do.</p>
+          </div>
+        </div>
+
+        <div class="workflow-grid">
+          <article class="workflow-step">
+            <span class="step-number">1</span>
+            <h3>Draft</h3>
+            <p>Gather requirements, approved source information, audience needs, and examples.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">2</span>
+            <h3>Technical review</h3>
+            <p>Ask Engineering or the appropriate SME to verify product behavior and technical details.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">3</span>
+            <h3>Editorial review</h3>
+            <p>Check structure, terminology, clarity, accessibility, and style-guide consistency.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">4</span>
+            <h3>QA and validation</h3>
+            <p>Test procedures, commands, links, code examples, and expected results.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">5</span>
+            <h3>Publish</h3>
+            <p>Merge the approved change, publish the update, and communicate what changed.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- RELEASE READINESS -->
+      <section class="project-section" aria-labelledby="release-title">
+        <div class="project-section-heading">
+          <div>
+            <h2 id="release-title">Release readiness</h2>
+            <p>A release is more than a publish date. It's a set of verified deliverables.</p>
+          </div>
+        </div>
+
+        <div class="release-grid">
+          <article class="release-card">
+            <p class="projects-eyebrow">Current milestone</p>
+            <h3>Huddlehouse v2.8 documentation update</h3>
+            <p>This sample release includes an updated CLI quickstart, verified configuration reference, refreshed API examples, and customer-facing release notes.</p>
+            <div class="release-meta">
+              <div><span>Release owner</span><strong>Documentation team</strong></div>
+              <div><span>Target date</span><strong>November 20, 2026</strong></div>
+              <div><span>Source control</span><strong>Git + pull request</strong></div>
+              <div><span>Review partners</span><strong>Engineering + Product</strong></div>
+            </div>
+          </article>
+
+          <section class="release-checklist" aria-labelledby="checklist-title">
+            <h3 id="checklist-title">Release checklist</h3>
+            <p class="checklist-progress" id="checklist-progress" aria-live="polite">0 of 6 checks complete</p>
+            <div class="progress-track" role="progressbar" aria-label="Release checklist progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="checklist-progressbar">
+              <div class="progress-fill" id="checklist-progress-fill"></div>
+            </div>
+            <label><input type="checkbox" class="release-check"> Technical details verified by the appropriate SME</label>
+            <label><input type="checkbox" class="release-check"> Commands and examples tested</label>
+            <label><input type="checkbox" class="release-check"> Editorial and style-guide review complete</label>
+            <label><input type="checkbox" class="release-check"> Links, navigation, and accessibility checked</label>
+            <label><input type="checkbox" class="release-check"> Pull request approved and merged</label>
+            <label><input type="checkbox" class="release-check"> Release notes and customer communication ready</label>
+          </section>
+        </div>
+      </section>
+
+      <!-- AI DOCUMENTATION LAB -->
+      <section class="project-section" aria-labelledby="ai-title">
+        <div class="ai-lab">
+
+          <div class="ai-lab-header">
+            <img src="assets/mascot-5.png" alt="Nova the alien helping with a documentation review">
+            <div>
+              <p class="projects-eyebrow">Human-led · AI-assisted</p>
+              <h2 id="ai-title">The AI Documentation Lab</h2>
+              <p>Explore how structured prompts and human review can improve documentation quality, uncover gaps, and support repeatable editorial workflows.</p>
+            </div>
+          </div>
+
+          <div class="ai-intro-banner">
+            <div class="ai-intro-icon" aria-hidden="true">✦</div>
+            <div>
+              <strong>AI doesn't replace the technical writer. It gives the writer another way to inspect the work.</strong>
+              <p>Explore the prompts, inspect sample findings, and make the final review decisions yourself. Nova and Pip will help you along the way.</p>
+            </div>
+          </div>
+
+          <!-- PROMPT LIBRARY -->
+          <section class="ai-subsection" aria-labelledby="prompt-library-title">
+            <div class="ai-section-heading">
+              <div>
+                <p class="projects-eyebrow">Part 01 · Prompt engineering</p>
+                <h3 id="prompt-library-title">The AI prompt library</h3>
+                <p>Different documentation challenges need different instructions. Each prompt includes a specific purpose, review criteria, and boundaries.</p>
+              </div>
+              <span class="ai-section-icon" aria-hidden="true">⌘</span>
+            </div>
+
+            <div class="ai-prompt-grid">
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">📖</span>
+                  <span class="prompt-category">Editorial quality</span>
+                </div>
+                <h4>Style and consistency</h4>
+                <p>Identify inconsistent terminology, unclear sentences, formatting issues, and potential style-guide violations.</p>
+                <button class="prompt-button" type="button" data-prompt="style">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Compare the supplied draft against the approved style guide. Identify each potential issue, explain the rule, and suggest a revision. Do not change technical meaning or invent facts.</p>
+                  <small>Best for: editorial reviews and documentation maintenance.</small>
+                </details>
+              </article>
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">🔎</span>
+                  <span class="prompt-category">Completeness</span>
+                </div>
+                <h4>Content gap analysis</h4>
+                <p>Find missing prerequisites, permissions, steps, expected results, and troubleshooting information.</p>
+                <button class="prompt-button" type="button" data-prompt="gaps">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Review the document from the perspective of a first-time user. Identify missing information, explain why it matters, and list questions for the product team.</p>
+                  <small>Best for: user guides, tutorials, and onboarding.</small>
+                </details>
+              </article>
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">🛡️</span>
+                  <span class="prompt-category">Technical quality</span>
+                </div>
+                <h4>Technical accuracy</h4>
+                <p>Compare documentation against approved source material and flag unsupported or conflicting statements.</p>
+                <button class="prompt-button" type="button" data-prompt="technical">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Compare the draft only against the supplied specification, test results, or SME notes. Identify discrepancies and request confirmation where evidence is missing.</p>
+                  <small>Best for: API references, CLI instructions, and configuration guides.</small>
+                </details>
+              </article>
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">💬</span>
+                  <span class="prompt-category">Reader experience</span>
+                </div>
+                <h4>Plain language and usability</h4>
+                <p>Find confusing explanations, unexplained terms, dense paragraphs, and instructions that are difficult to follow.</p>
+                <button class="prompt-button" type="button" data-prompt="plain">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Evaluate the draft for a defined audience. Identify language that may confuse a reader and suggest clearer alternatives without removing necessary technical detail.</p>
+                  <small>Best for: onboarding, help content, and tutorials.</small>
+                </details>
+              </article>
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">📣</span>
+                  <span class="prompt-category">Product communication</span>
+                </div>
+                <h4>Release communications</h4>
+                <p>Check whether release notes explain the change, customer impact, required actions, and supporting resources.</p>
+                <button class="prompt-button" type="button" data-prompt="release">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Review release notes against approved release details. Identify missing context, unclear impact, and questions for Product or Engineering.</p>
+                  <small>Best for: release notes and customer announcements.</small>
+                </details>
+              </article>
+
+              <article class="prompt-card">
+                <div class="prompt-card-top">
+                  <span class="prompt-icon" aria-hidden="true">☑️</span>
+                  <span class="prompt-category">Quality assurance</span>
+                </div>
+                <h4>Final documentation QA</h4>
+                <p>Inspect structure, links, examples, accessibility considerations, and publication readiness.</p>
+                <button class="prompt-button" type="button" data-prompt="qa">Copy prompt</button>
+                <details class="prompt-preview">
+                  <summary>Explore this prompt</summary>
+                  <p>Use a defined checklist to inspect the supplied document. Separate verifiable findings from items that require a human or technical review.</p>
+                  <small>Best for: pre-publication reviews and recurring quality checks.</small>
+                </details>
+              </article>
+
+            </div>
+
+            <p class="prompt-status" id="prompt-status" aria-live="polite"></p>
+          </section>
+
+          <!-- INTERACTIVE REVIEW -->
+          <section class="ai-subsection" aria-labelledby="ai-demo-title">
+            <div class="ai-section-heading">
+              <div>
+                <p class="projects-eyebrow">Part 02 · Review simulation</p>
+                <h3 id="ai-demo-title">Put the AI reviewer to work</h3>
+                <p>What happens when AI examines a technical document? Explore the sample findings and decide what should happen next.</p>
+              </div>
+              <span class="ai-section-icon" aria-hidden="true">🔬</span>
+            </div>
+
+            <div class="ai-demo-intro">
+              <p>Our sample document contains several common documentation problems. Select the review button to reveal the simulated findings. Then open each finding to understand the issue and make a decision.</p>
+              <div class="ai-demo-tag">SIMULATED AI REVIEW · SAMPLE CONTENT</div>
+            </div>
+
+            <div class="ai-review-workspace">
+
+              <article class="ai-document-panel">
+                <div class="ai-panel-heading">
+                  <h4>Sample CLI quickstart</h4>
+                  <span class="ai-panel-label">Draft document</span>
+                </div>
+
+                <div class="sample-document">
+                  <h5>Install and configure the CLI</h5>
+                  <p>Install the CLI using the package manager. You may need administrator access depending on your environment.</p>
+                  <p>After installation, run <mark>huddle configure</mark> to set up the application. The configuration should be completed before starting.</p>
+                  <p>Once everything is configured, start the service. If it doesn't work, check your settings or contact support.</p>
+                </div>
+
+                <p class="document-source-note"><strong>Review context:</strong> This fictional draft is intentionally incomplete. No approved command specification or configuration guide has been provided.</p>
+
+                <button type="button" class="run-review-button" id="run-ai-review">✦ Run simulated AI review</button>
+                <p class="demo-status" id="demo-status" aria-live="polite">The sample review has not been run yet.</p>
+              </article>
+
+              <article class="ai-findings-panel">
+                <div class="ai-panel-heading">
+                  <h4>Review findings</h4>
+                  <span class="ai-panel-label" id="finding-count-label">Awaiting review</span>
+                </div>
+
+                <div class="ai-empty-state" id="ai-empty-state">
+                  <strong>Nova is ready to inspect the document!</strong>
+                  <p>Run the simulated review to reveal potential documentation issues, why they matter, and suggested next steps.</p>
+                </div>
+
+                <div class="finding-list" id="finding-list" hidden>
+
+                  <article class="finding-card" data-finding="prerequisites">
+                    <div class="finding-topline">
+                      <span class="finding-severity severity-critical">● Critical gap</span>
+                      <span class="finding-decision">Pending</span>
+                    </div>
+                    <h5>Prerequisites are not defined</h5>
+                    <p>The draft mentions administrator access but does not explain the actual requirements.</p>
+                    <details>
+                      <summary>Why does this matter?</summary>
+                      <div class="finding-explanation">
+                        <p><strong>Reader impact:</strong> A user may begin installation without the permissions or dependencies needed to complete it.</p>
+                        <p><strong>Suggested action:</strong> Ask Engineering to confirm supported environments, dependencies, and required permissions before adding instructions.</p>
+                        <p><strong>AI limitation:</strong> AI cannot determine the real product requirements from this draft alone.</p>
+                      </div>
+                    </details>
+                    <div class="finding-actions">
+                      <button type="button" class="accept-action" data-decision="accepted">Accept</button>
+                      <button type="button" data-decision="rejected">Reject</button>
+                      <button type="button" class="escalate-action" data-decision="escalated">Escalate</button>
+                    </div>
+                  </article>
+
+                  <article class="finding-card" data-finding="command">
+                    <div class="finding-topline">
+                      <span class="finding-severity severity-warning">● Technical question</span>
+                      <span class="finding-decision">Pending</span>
+                    </div>
+                    <h5>Command behavior needs verification</h5>
+                    <p>The document provides a command but does not explain its required arguments or expected behavior.</p>
+                    <details>
+                      <summary>Why does this matter?</summary>
+                      <div class="finding-explanation">
+                        <p><strong>Reader impact:</strong> Users may not know whether the command is complete, what it changes, or what output to expect.</p>
+                        <p><strong>Suggested action:</strong> Request an approved command example and expected output from Engineering.</p>
+                        <p><strong>AI limitation:</strong> A plausible-looking command is not proof that it works.</p>
+                      </div>
+                    </details>
+                    <div class="finding-actions">
+                      <button type="button" class="accept-action" data-decision="accepted">Accept</button>
+                      <button type="button" data-decision="rejected">Reject</button>
+                      <button type="button" class="escalate-action" data-decision="escalated">Escalate</button>
+                    </div>
+                  </article>
+
+                  <article class="finding-card" data-finding="configuration">
+                    <div class="finding-topline">
+                      <span class="finding-severity severity-warning">● Content gap</span>
+                      <span class="finding-decision">Pending</span>
+                    </div>
+                    <h5>Configuration steps are missing</h5>
+                    <p>The draft says configuration must be completed but does not explain how to complete it.</p>
+                    <details>
+                      <summary>Why does this matter?</summary>
+                      <div class="finding-explanation">
+                        <p><strong>Reader impact:</strong> The user is told to complete an action without receiving the information needed to do it.</p>
+                        <p><strong>Suggested action:</strong> Obtain the approved configuration workflow, required values, and expected result.</p>
+                        <p><strong>AI limitation:</strong> AI can identify the missing explanation, but cannot safely invent the workflow.</p>
+                      </div>
+                    </details>
+                    <div class="finding-actions">
+                      <button type="button" class="accept-action" data-decision="accepted">Accept</button>
+                      <button type="button" data-decision="rejected">Reject</button>
+                      <button type="button" class="escalate-action" data-decision="escalated">Escalate</button>
+                    </div>
+                  </article>
+
+                  <article class="finding-card" data-finding="troubleshooting">
+                    <div class="finding-topline">
+                      <span class="finding-severity severity-info">● Usability issue</span>
+                      <span class="finding-decision">Pending</span>
+                    </div>
+                    <h5>Troubleshooting guidance is too broad</h5>
+                    <p>“Check your settings or contact support” does not give the reader a useful diagnostic path.</p>
+                    <details>
+                      <summary>Why does this matter?</summary>
+                      <div class="finding-explanation">
+                        <p><strong>Reader impact:</strong> Users are left without a clear next step when something goes wrong.</p>
+                        <p><strong>Suggested action:</strong> Identify common failure messages, diagnostic checks, recovery steps, and escalation details with Support.</p>
+                        <p><strong>AI limitation:</strong> AI can suggest a clearer structure but needs verified troubleshooting information.</p>
+                      </div>
+                    </details>
+                    <div class="finding-actions">
+                      <button type="button" class="accept-action" data-decision="accepted">Accept</button>
+                      <button type="button" data-decision="rejected">Reject</button>
+                      <button type="button" class="escalate-action" data-decision="escalated">Escalate</button>
+                    </div>
+                  </article>
+
+                  <article class="finding-card" data-finding="wording">
+                    <div class="finding-topline">
+                      <span class="finding-severity severity-style">● Editorial suggestion</span>
+                      <span class="finding-decision">Pending</span>
+                    </div>
+                    <h5>Some wording is vague</h5>
+                    <p>Expressions such as “everything is configured” and “if it doesn't work” could be more specific.</p>
+                    <details>
+                      <summary>Why does this matter?</summary>
+                      <div class="finding-explanation">
+                        <p><strong>Reader impact:</strong> Vague language can make it difficult to understand when a step is complete or what to do next.</p>
+                        <p><strong>Suggested action:</strong> Define the expected result and use specific, observable conditions where possible.</p>
+                        <p><strong>AI limitation:</strong> Suggested wording still needs to preserve the verified product behavior.</p>
+                      </div>
+                    </details>
+                    <div class="finding-actions">
+                      <button type="button" class="accept-action" data-decision="accepted">Accept</button>
+                      <button type="button" data-decision="rejected">Reject</button>
+                      <button type="button" class="escalate-action" data-decision="escalated">Escalate</button>
+                    </div>
+                  </article>
+
+                </div>
+              </article>
+            </div>
+
+            <div class="ai-results" aria-label="Review decision summary">
+              <div class="ai-result-card">
+                <span>Total findings</span>
+                <strong id="result-total">0</strong>
+                <small>Identified in sample review</small>
+              </div>
+              <div class="ai-result-card accepted">
+                <span>Accepted</span>
+                <strong id="result-accepted">0</strong>
+                <small>Approved for action</small>
+              </div>
+              <div class="ai-result-card rejected">
+                <span>Rejected</span>
+                <strong id="result-rejected">0</strong>
+                <small>Not accepted by reviewer</small>
+              </div>
+              <div class="ai-result-card escalated">
+                <span>Escalated</span>
+                <strong id="result-escalated">0</strong>
+                <small>Needs SME confirmation</small>
+              </div>
+            </div>
+
+            <div class="ai-review-actions">
+              <p id="decision-status" aria-live="polite">Run the review and make a decision on each finding.</p>
+              <button type="button" class="reset-review-button" id="reset-ai-review">Reset demonstration</button>
+            </div>
+          </section>
+
+          <!-- BEFORE AND AFTER -->
+          <section class="ai-subsection" aria-labelledby="before-after-title">
+            <div class="ai-section-heading">
+              <div>
+                <p class="projects-eyebrow">Part 03 · Practical impact</p>
+                <h3 id="before-after-title">A little more clarity goes a long way</h3>
+                <p>AI can suggest ways to improve readability. The writer must still verify that the revised instructions are accurate.</p>
+              </div>
+              <span class="ai-section-icon" aria-hidden="true">✨</span>
+            </div>
+
+            <div class="before-after-grid">
+              <article class="before-after-card">
+                <span class="before-after-label before-label">Before · Original draft</span>
+                <blockquote>Once everything is configured, start the service. If it doesn't work, check your settings or contact support.</blockquote>
+                <p>The instruction is vague. It does not explain how to confirm configuration, how to start the service, or what to do when an error occurs.</p>
+              </article>
+
+              <article class="before-after-card">
+                <span class="before-after-label after-label">After · Improved structure</span>
+                <blockquote>
+                  1. Complete the required configuration steps.<br>
+                  2. Verify that the configuration check completes successfully.<br>
+                  3. Start the service using the approved command.<br>
+                  4. Confirm that the service reports a successful startup.
+                </blockquote>
+                <p>This example illustrates a clearer structure. The actual commands, configuration steps, and success messages must be supplied and verified by the product team.</p>
+              </article>
+            </div>
+          </section>
+
+          <!-- HUMAN REVIEW -->
+          <section class="ai-subsection" aria-labelledby="guardrails-title">
+            <div class="ai-section-heading">
+              <div>
+                <p class="projects-eyebrow">Part 04 · Responsible AI</p>
+                <h3 id="guardrails-title">The human review checkpoint</h3>
+                <p>AI can help find potential issues. It cannot approve product behavior or take responsibility for published documentation.</p>
+              </div>
+              <span class="ai-section-icon" aria-hidden="true">🤝</span>
+            </div>
+
+            <div class="ai-guardrails">
+              <div class="guardrail">
+                <strong>1. Give AI boundaries</strong>
+                <span>Supply approved source material, define the audience, and provide clear instructions. Protect confidential information.</span>
+              </div>
+              <div class="guardrail">
+                <strong>2. Evaluate the output</strong>
+                <span>Check false positives, missed issues, unsupported claims, and whether suggestions preserve the original meaning.</span>
+              </div>
+              <div class="guardrail">
+                <strong>3. Keep human approval</strong>
+                <span>Writers make editorial decisions. SMEs verify technical details. Humans approve publication.</span>
+              </div>
+            </div>
+
+            <div class="ai-takeaway">
+              <div class="ai-takeaway-icon" aria-hidden="true">👽</div>
+              <div>
+                <strong>Nova and Pip's big takeaway</strong>
+                <p>AI can help us spot the things we might miss. But a good technical writer knows which suggestions to accept, which to question, and when to bring in an expert. That's how we turn AI assistance into trustworthy documentation.</p>
+              </div>
+            </div>
+          </section>
+
+          <div class="resource-links">
+            <a href="article.html?doc=huddle-style-guide">Read the Documentation Style Guide →</a>
+            <a href="article.html?doc=huddle-ai-guidelines">Read AI Usage Guidelines →</a>
+            <a href="article.html?doc=projects-ai-review-playbook">Open AI Review Playbook →</a>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="project-footer-note">
+        <strong>Nova's reminder:</strong> A good project plan makes the work visible.
+        <strong>Pip's reminder:</strong> A good review process makes the result trustworthy.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Huddlehouse. Good work happens together.</p>
+  </footer>
+
+  <script>
+    // -----------------------------------------
+    // PROJECT BOARD FILTERS
+    // -----------------------------------------
+
+    const taskCards = Array.from(document.querySelectorAll(".task-card"));
+    const searchInput = document.getElementById("task-search");
+    const statusFilter = document.getElementById("status-filter");
+    const priorityFilter = document.getElementById("priority-filter");
+    const filterStatus = document.getElementById("filter-status");
+
+    function filterTasks() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const selectedStatus = statusFilter.value;
+      const selectedPriority = priorityFilter.value;
+      let visibleCount = 0;
+
+      taskCards.forEach(card => {
+        const matchesSearch = card.textContent.toLowerCase().includes(searchTerm);
+        const matchesStatus = selectedStatus === "all" || card.dataset.status === selectedStatus;
+        const matchesPriority = selectedPriority === "all" || card.dataset.priority === selectedPriority;
+        const isVisible = matchesSearch && matchesStatus && matchesPriority;
+
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+      });
+
+      document.querySelectorAll(".kanban-column").forEach(column => {
+        const visibleCards = column.querySelectorAll(".task-card:not([hidden])").length;
+        column.querySelector(".column-count").textContent = visibleCards;
+        column.querySelector(".empty-column")?.remove();
+
+        if (visibleCards === 0) {
+          const empty = document.createElement("p");
+          empty.className = "empty-column";
+          empty.textContent = "No matching tasks.";
+          column.querySelector(".task-list").appendChild(empty);
+        }
+      });
+
+      filterStatus.textContent = `Showing ${visibleCount} of ${taskCards.length} sample tasks.`;
+    }
+
+    searchInput.addEventListener("input", filterTasks);
+    statusFilter.addEventListener("change", filterTasks);
+    priorityFilter.addEventListener("change", filterTasks);
+
+    document.getElementById("clear-filters").addEventListener("click", () => {
+      searchInput.value = "";
+      statusFilter.value = "all";
+      priorityFilter.value = "all";
+      filterTasks();
+      searchInput.focus();
+    });
+
+    // -----------------------------------------
+    // RELEASE CHECKLIST
+    // -----------------------------------------
+
+    const releaseChecks = Array.from(document.querySelectorAll(".release-check"));
+    const checklistProgress = document.getElementById("checklist-progress");
+    const checklistProgressFill = document.getElementById("checklist-progress-fill");
+    const checklistProgressbar = document.getElementById("checklist-progressbar");
+
+    function updateChecklistProgress() {
+      const completed = releaseChecks.filter(check => check.checked).length;
+      const total = releaseChecks.length;
+      const percentage = total ? (completed / total) * 100 : 0;
+
+      checklistProgress.textContent = `${completed} of ${total} checks complete`;
+      checklistProgressFill.style.width = `${percentage}%`;
+      checklistProgressbar.setAttribute("aria-valuenow", completed);
+    }
+
+    releaseChecks.forEach(check => {
+      check.addEventListener("change", updateChecklistProgress);
+    });
+
+    // -----------------------------------------
+    // AI PROMPT LIBRARY
+    // -----------------------------------------
+
+    const prompts = {
+      style: `You are an editorial assistant reviewing technical documentation.
+
+Compare the supplied draft against the approved documentation style guide.
+
+Check for:
+- Inconsistent terminology and product names
+- Unclear or unnecessarily complex sentences
+- Passive voice where active voice would be clearer
+- Repetition and formatting inconsistencies
+- Accessibility and heading-structure issues
+
+For every finding, provide:
+1. The original text
+2. The potential issue
+3. The relevant style-guide rule
+4. A suggested revision
+5. An explanation of why the revision helps the reader
+
+Do not invent technical facts, change product behavior, or override approved terminology. Preserve commands, code, and API names. Flag uncertain issues rather than guessing.
+
+Draft:
+[Paste approved draft here]
+
+Style guide:
+[Provide the approved style guide or relevant rules here]`,
+
+      gaps: `You are reviewing technical documentation from the perspective of a first-time user.
+
+Identify potential missing information:
+- Prerequisites and required permissions
+- Supported environments and dependencies
+- Ordered steps and decision points
+- Expected results
+- Troubleshooting and recovery guidance
+- Relevant links and next steps
+
+For every potential gap:
+1. Identify the missing information.
+2. Explain why it matters to the reader.
+3. Describe the likely user impact.
+4. List the question that needs confirmation from the product team.
+
+Do not create missing technical instructions or assume product behavior.
+
+Document:
+[Paste draft here]`,
+
+      technical: `You are assisting with a technical documentation consistency review.
+
+Compare the documentation draft only against the approved source material supplied below.
+
+Check:
+- Product names and terminology
+- Commands, flags, and configuration values
+- API parameters and response examples
+- Defaults, requirements, and compatibility statements
+- Differences between the draft and source material
+
+Return a table containing:
+1. The statement in the draft
+2. Supporting source evidence
+3. The discrepancy or question
+4. The recommended next action
+5. Whether SME confirmation is required
+
+Do not infer missing behavior, invent values, or resolve conflicts by guessing. If the supplied sources conflict, flag the conflict.
+
+Draft:
+[Paste documentation draft here]
+
+Approved source:
+[Paste approved specification, test results, or SME notes here]`,
+
+      plain: `You are reviewing documentation for clarity and usability.
+
+Evaluate the supplied content for its intended audience.
+
+Check:
+- Unexplained technical terms
+- Long or difficult sentences
+- Unclear references such as "this" or "it"
+- Steps that combine too many actions
+- Missing context that a first-time user may need
+- Instructions that do not explain the expected result
+
+For each finding:
+1. Quote the original wording.
+2. Explain why it may confuse the reader.
+3. Suggest a clearer alternative.
+4. Identify any technical meaning that must be preserved.
+
+Do not remove necessary technical detail or invent facts.
+
+Audience:
+[Describe the intended audience]
+
+Draft:
+[Paste draft here]`,
+
+      release: `You are an editorial assistant reviewing draft release notes.
+
+Check whether each item clearly explains:
+- What changed
+- Who is affected
+- The user or developer impact
+- Any required action or configuration
+- Availability or version information, when confirmed
+- Links to relevant documentation
+
+Return a table with:
+1. The release item
+2. Missing or unclear information
+3. Suggested editorial improvement
+4. Questions for Product or Engineering
+
+Use only the approved release information provided. Do not invent dates, availability, compatibility, or product behavior.
+
+Approved release information:
+[Paste approved release details here]
+
+Draft release notes:
+[Paste release notes here]`,
+
+      qa: `You are assisting with a final documentation quality review.
+
+Review the supplied document against the checklist below.
+
+Check:
+- Heading structure and logical organization
+- Consistent terminology and formatting
+- Completeness of prerequisites and procedures
+- Accuracy of links and references, when verifiable
+- Code block and example consistency
+- Accessibility considerations
+- Expected results and troubleshooting guidance
+- Unresolved technical questions
+- Publication readiness
+
+Return:
+1. Findings grouped by severity
+2. Evidence from the document
+3. Suggested next action
+4. Items requiring technical SME verification
+5. A final checklist of unresolved issues
+
+Do not claim that commands, links, or product behavior have been tested unless test evidence is provided.
+
+Document:
+[Paste draft here]
+
+Quality checklist or style guide:
+[Provide approved review criteria here]`
+    };
+
+    const promptStatus = document.getElementById("prompt-status");
+
+    document.querySelectorAll("[data-prompt]").forEach(button => {
+      button.addEventListener("click", async () => {
+        const prompt = prompts[button.dataset.prompt];
+
+        try {
+          await navigator.clipboard.writeText(prompt);
+          promptStatus.textContent = "Prompt copied! Paste it into your approved AI tool and provide the relevant source material.";
+        } catch (error) {
+          promptStatus.textContent = "Clipboard access was unavailable. Try opening this page through your local server or browser's secure connection.";
+        }
+      });
+    });
+
+    // -----------------------------------------
+    // SIMULATED AI REVIEW
+    // -----------------------------------------
+
+    const runReviewButton = document.getElementById("run-ai-review");
+    const resetReviewButton = document.getElementById("reset-ai-review");
+    const emptyState = document.getElementById("ai-empty-state");
+    const findingList = document.getElementById("finding-list");
+    const demoStatus = document.getElementById("demo-status");
+    const findingCountLabel = document.getElementById("finding-count-label");
+    const decisionStatus = document.getElementById("decision-status");
+
+    const findingCards = Array.from(document.querySelectorAll(".finding-card"));
+
+    const resultTotal = document.getElementById("result-total");
+    const resultAccepted = document.getElementById("result-accepted");
+    const resultRejected = document.getElementById("result-rejected");
+    const resultEscalated = document.getElementById("result-escalated");
+
+    let reviewHasRun = false;
+
+    const decisionLabels = {
+      accepted: "Accepted",
+      rejected: "Rejected",
+      escalated: "Escalated"
+    };
+
+    function updateReviewResults() {
+      const decisions = findingCards.map(card => card.dataset.decision || "pending");
+
+      const accepted = decisions.filter(value => value === "accepted").length;
+      const rejected = decisions.filter(value => value === "rejected").length;
+      const escalated = decisions.filter(value => value === "escalated").length;
+      const pending = decisions.filter(value => value === "pending").length;
+
+      resultTotal.textContent = reviewHasRun ? findingCards.length : "0";
+      resultAccepted.textContent = accepted;
+      resultRejected.textContent = rejected;
+      resultEscalated.textContent = escalated;
+
+      if (!reviewHasRun) {
+        decisionStatus.textContent = "Run the review and make a decision on each finding.";
+      } else if (pending > 0) {
+        decisionStatus.textContent = `${pending} finding${pending === 1 ? "" : "s"} still need a decision.`;
+      } else {
+        decisionStatus.textContent = "All findings have been reviewed. Human review decisions are complete!";
+      }
+    }
+
+    function setFindingDecision(card, decision) {
+      card.dataset.decision = decision;
+
+      const badge = card.querySelector(".finding-decision");
+      badge.textContent = decisionLabels[decision];
+
+      const buttons = card.querySelectorAll("[data-decision]");
+
+      buttons.forEach(button => {
+        button.disabled = button.dataset.decision === decision;
+        button.setAttribute(
+          "aria-pressed",
+          button.dataset.decision === decision ? "true" : "false"
+        );
+      });
+
+      updateReviewResults();
+    }
+
+    function runSimulatedReview() {
+      reviewHasRun = true;
+
+      emptyState.hidden = true;
+      findingList.hidden = false;
+
+      findingCards.forEach(card => {
+        card.dataset.decision = "pending";
+        card.querySelector(".finding-decision").textContent = "Pending";
+
+        card.querySelectorAll("[data-decision]").forEach(button => {
+          button.disabled = false;
+          button.setAttribute("aria-pressed", "false");
+        });
+      });
+
+      findingCountLabel.textContent = `${findingCards.length} findings`;
+      demoStatus.textContent = "Review complete. Five sample findings were identified. Inspect each one and decide what to do.";
+      runReviewButton.textContent = "↻ Run review again";
+
+      updateReviewResults();
+
+      document.getElementById("ai-findings-panel")?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    }
+
+    findingCards.forEach(card => {
+      card.querySelectorAll("[data-decision]").forEach(button => {
+        button.addEventListener("click", () => {
+          if (!reviewHasRun) return;
+
+          setFindingDecision(card, button.dataset.decision);
+        });
+      });
+    });
+
+    runReviewButton.addEventListener("click", runSimulatedReview);
+
+    resetReviewButton.addEventListener("click", () => {
+      reviewHasRun = false;
+
+      emptyState.hidden = false;
+      findingList.hidden = true;
+
+      findingCards.forEach(card => {
+        delete card.dataset.decision;
+
+        card.querySelector(".finding-decision").textContent = "Pending";
+
+        card.querySelectorAll("[data-decision]").forEach(button => {
+          button.disabled = false;
+          button.setAttribute("aria-pressed", "false");
+        });
+
+        const details = card.querySelector("details");
+        if (details) details.open = false;
+      });
+
+      findingCountLabel.textContent = "Awaiting review";
+      demoStatus.textContent = "The sample review has not been run yet.";
+      runReviewButton.textContent = "✦ Run simulated AI review";
+
+      updateReviewResults();
+    });
+
+    // -----------------------------------------
+    // INITIALIZE PAGE
+    // -----------------------------------------
+
+    filterTasks();
+    updateChecklistProgress();
+    updateReviewResults();
+  </script>
+</body>
+</html>
