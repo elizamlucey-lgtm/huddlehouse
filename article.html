@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | Huddlehouse</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="library.html" class="active">Library</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#developer-hub">Developer Hub</a>
+            <a href="index.html#academy">Academy</a>
+        </nav>
+    </header>
+
+    <main class="article-layout">
+
+        <aside class="article-sidebar">
+            <a href="library.html" class="back-link">← Back to Library</a>
+
+            <h3>Huddlehouse Library</h3>
+
+            <nav class="article-nav">
+                <a href="article.html?doc=index">Library Overview</a>
+                <a href="article.html?doc=getting-started">Getting Started</a>
+                <a href="article.html?doc=troubleshooting">Troubleshooting</a>
+            </nav>
+        </aside>
+
+        <article class="article-content">
+            <div id="article-breadcrumb">
+                <a href="library.html">Library</a> / Documentation
+            </div>
+
+            <div id="markdown-content">
+                <p>Loading documentation...</p>
+            </div>
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Huddlehouse. Good work happens together.</p>
+    </footer>
+
+    <script>
+        const documents = {
+            "index": {
+                file: "docs/library/index.md",
+                title: "Library Overview"
+            },
+            "getting-started": {
+                file: "docs/library/getting-started.md",
+                title: "Getting Started with Huddlehouse"
+            },
+            "troubleshooting": {
+                file: "docs/library/troubleshooting.md",
+                title: "Troubleshooting Huddlehouse"
+            }
+        };
+
+        async function loadArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const doc = params.get("doc");
+            const article = documents[doc];
+            const content = document.getElementById("markdown-content");
+
+            if (!article) {
+                content.innerHTML = "<h1>Article not found</h1><p>Select an article from the Library navigation.</p>";
+                return;
+            }
+
+            document.title = article.title + " | Huddlehouse";
+
+            try {
+                const response = await fetch(article.file);
+
+                if (!response.ok) {
+                    throw new Error("Documentation could not be loaded.");
+                }
+
+                const markdown = await response.text();
+
+                content.innerHTML = marked.parse(markdown);
+
+                content.querySelectorAll("a").forEach(link => {
+                    const href = link.getAttribute("href");
+
+                    if (href && href.endsWith(".md")) {
+                        const name = href.replace(".md", "");
+                        link.href = "article.html?doc=" + encodeURIComponent(name);
+                    }
+                });
+
+                document.getElementById("article-breadcrumb").innerHTML =
+                    '<a href="library.html">Library</a> / ' + article.title;
+
+            } catch (error) {
+                content.innerHTML =
+                    "<h1>Unable to load documentation</h1>" +
+                    "<p>Refresh the page or return to the Library.</p>";
+            }
+        }
+
+        loadArticle();
+    </script>
+
+</body>
+</html>
