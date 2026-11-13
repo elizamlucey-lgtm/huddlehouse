@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the Huddlehouse REST API endpoints, authentication, schemas, and response examples.">
+    <title>API Reference | Huddlehouse</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+    <style>
+        .api-reference-intro {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 24px 24px;
+        }
+
+        .api-reference-intro h1 {
+            margin-bottom: 12px;
+        }
+
+        .api-reference-intro p {
+            max-width: 760px;
+            line-height: 1.7;
+        }
+
+        .api-notice {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: #f5f1e8;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        #swagger-ui {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .swagger-ui .topbar {
+            display: none;
+        }
+
+        .api-back-link {
+            display: inline-block;
+            margin-top: 12px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="library.html">Library</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="developer.html" class="active">Developer Hub</a>
+            <a href="index.html#academy">Academy</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="api-reference-intro">
+            <p class="eyebrow">HUDDLEHOUSE DEVELOPER HUB</p>
+            <h1>API Reference</h1>
+
+            <p>
+                Explore the Huddlehouse REST API, including available
+                endpoints, authentication requirements, request parameters,
+                and response schemas.
+            </p>
+
+            <div class="api-notice">
+                <strong>Portfolio demonstration:</strong>
+                Huddlehouse is a fictional product. This API reference
+                documents a proposed API contract. The endpoints are
+                illustrative and are not connected to a live service.
+            </div>
+
+            <a class="api-back-link" href="developer.html">
+                ← Back to Developer Hub
+            </a>
+        </section>
+
+        <section id="swagger-ui"></section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Huddlehouse. Good work happens together.</p>
+    </footer>
+
+    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+
+    <script>
+        window.onload = function () {
+            SwaggerUIBundle({
+                url: "docs/developer/openapi.yaml",
+                dom_id: "#swagger-ui",
+                deepLinking: true,
+                docExpansion: "list",
+                defaultModelsExpandDepth: 1,
+                displayRequestDuration: true,
+                supportedSubmitMethods: [],
+                presets: [
+                    SwaggerUIBundle.presets.apis
+                ],
+                layout: "BaseLayout"
+            });
+        };
+    </script>
+
+</body>
+</html>
