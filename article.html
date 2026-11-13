@@ -7,7 +7,67 @@
     <title>Documentation | Huddlehouse</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        /* Collapsible Academy lesson sections */
+
+        .academy-collapsible-section {
+            margin: 20px 0;
+            border: 1px solid #e1e8df;
+            border-radius: 14px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .academy-collapsible-section > summary {
+            padding: 18px 22px;
+            background: #f3f7f3;
+            color: #354b3a;
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            list-style-position: inside;
+            transition: background 0.2s ease;
+        }
+
+        .academy-collapsible-section > summary:hover {
+            background: #eaf2ec;
+        }
+
+        .academy-collapsible-section[open] > summary {
+            border-bottom: 1px solid #e1e8df;
+        }
+
+        .academy-collapsible-content {
+            padding: 20px 22px;
+        }
+
+        .academy-collapsible-content > :first-child {
+            margin-top: 0;
+        }
+
+        .academy-collapsible-content > :last-child {
+            margin-bottom: 0;
+        }
+
+        .academy-collapsible-section > summary:focus-visible {
+            outline: 3px solid #8ba995;
+            outline-offset: -3px;
+        }
+
+        @media (max-width: 600px) {
+            .academy-collapsible-section > summary {
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .academy-collapsible-content {
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
     <header class="site-header">
@@ -15,10 +75,10 @@
 
         <nav class="main-nav">
             <a href="index.html">Home</a>
-            <a href="library.html">Library</a>
+            <a href="library.html" id="nav-library">Library</a>
             <a href="index.html#projects">Projects</a>
-            <a href="developer.html" class="active">Developer Hub</a>
-            <a href="index.html#academy">Academy</a>
+            <a href="developer.html" id="nav-developer">Developer Hub</a>
+            <a href="academy.html" id="nav-academy">Academy</a>
         </nav>
     </header>
 
@@ -55,6 +115,7 @@
 
     <script>
         const documents = {
+            // Library
             "index": {
                 file: "docs/library/index.md",
                 title: "Library Overview",
@@ -69,6 +130,13 @@
                 file: "docs/library/troubleshooting.md",
                 title: "Troubleshooting Huddlehouse",
                 section: "library"
+            },
+
+            // Developer Hub
+            "developer-overview": {
+                file: "docs/developer/index.md",
+                title: "Developer Hub Overview",
+                section: "developer"
             },
             "quickstart": {
                 file: "docs/developer/quickstart.md",
@@ -89,6 +157,23 @@
                 file: "docs/developer/errors.md",
                 title: "Errors & Troubleshooting",
                 section: "developer"
+            },
+
+            // Academy
+            "academy-getting-started": {
+                file: "docs/academy/getting-started.md",
+                title: "Getting Started with Huddlehouse",
+                section: "academy"
+            },
+            "team-collaboration": {
+                file: "docs/academy/team-collaboration.md",
+                title: "Team Collaboration",
+                section: "academy"
+            },
+            "developer-workflows": {
+                file: "docs/academy/developer-workflows.md",
+                title: "Developer Workflows",
+                section: "academy"
             }
         };
 
@@ -99,16 +184,73 @@
         `;
 
         const developerNavigation = `
+            <a href="article.html?doc=developer-overview">Developer Hub Overview</a>
             <a href="article.html?doc=quickstart">API Quickstart</a>
             <a href="article.html?doc=authentication">Authentication</a>
             <a href="article.html?doc=api-reference">API Reference</a>
             <a href="article.html?doc=errors">Errors & Troubleshooting</a>
         `;
 
+        const academyNavigation = `
+            <a href="article.html?doc=academy-getting-started">Getting Started</a>
+            <a href="article.html?doc=team-collaboration">Team Collaboration</a>
+            <a href="article.html?doc=developer-workflows">Developer Workflows</a>
+        `;
+
+        // Turn numbered Academy lesson headings into collapsible sections.
+        function makeAcademySectionsCollapsible(content) {
+            const headings = Array.from(content.querySelectorAll("h2"));
+
+            headings.forEach(heading => {
+                const headingText = heading.textContent.trim();
+
+                if (!/^\d+\./.test(headingText)) {
+                    return;
+                }
+
+                // Skip headings that have already been moved into a section.
+                if (heading.closest("details")) {
+                    return;
+                }
+
+                const details = document.createElement("details");
+                details.className = "academy-collapsible-section";
+
+                const summary = document.createElement("summary");
+                summary.textContent = headingText;
+
+                const sectionContent = document.createElement("div");
+                sectionContent.className = "academy-collapsible-content";
+
+                content.insertBefore(details, heading);
+
+                details.appendChild(summary);
+                details.appendChild(sectionContent);
+
+                heading.remove();
+
+                // Move everything belonging to this section into its panel.
+                let nextNode = details.nextSibling;
+
+                while (
+                    nextNode &&
+                    !(
+                        nextNode.nodeType === Node.ELEMENT_NODE &&
+                        nextNode.tagName === "H2"
+                    )
+                ) {
+                    const currentNode = nextNode;
+                    nextNode = nextNode.nextSibling;
+                    sectionContent.appendChild(currentNode);
+                }
+            });
+        }
+
         async function loadArticle() {
             const params = new URLSearchParams(window.location.search);
             const doc = params.get("doc");
             const article = documents[doc];
+
             const content = document.getElementById("markdown-content");
             const breadcrumb = document.getElementById("article-breadcrumb");
             const sidebarHeading = document.getElementById("sidebar-heading");
@@ -117,21 +259,51 @@
 
             if (!article) {
                 content.innerHTML =
-                    "<h1>Article not found</h1><p>Select a resource from the Library or Developer Hub.</p>";
+                    "<h1>Article not found</h1>" +
+                    "<p>Select a resource from the Library, Developer Hub, or Academy.</p>";
                 return;
             }
 
-            const isDeveloper = article.section === "developer";
+            const sectionNames = {
+                library: "Library",
+                developer: "Developer Hub",
+                academy: "Academy"
+            };
 
-            const sectionName = isDeveloper ? "Developer Hub" : "Library";
-            const sectionLink = isDeveloper ? "developer.html" : "library.html";
+            const sectionLinks = {
+                library: "library.html",
+                developer: "developer.html",
+                academy: "academy.html"
+            };
+
+            const sectionNavigation = {
+                library: libraryNavigation,
+                developer: developerNavigation,
+                academy: academyNavigation
+            };
+
+            const sectionName = sectionNames[article.section];
+            const sectionLink = sectionLinks[article.section];
 
             document.title = article.title + " | Huddlehouse";
 
             sidebarHeading.textContent = sectionName;
-            articleNav.innerHTML = isDeveloper ? developerNavigation : libraryNavigation;
+            articleNav.innerHTML = sectionNavigation[article.section];
+
             backLink.href = sectionLink;
             backLink.textContent = "← Back to " + sectionName;
+
+            document.getElementById("nav-library").classList.toggle(
+                "active", article.section === "library"
+            );
+
+            document.getElementById("nav-developer").classList.toggle(
+                "active", article.section === "developer"
+            );
+
+            document.getElementById("nav-academy").classList.toggle(
+                "active", article.section === "academy"
+            );
 
             try {
                 const response = await fetch(article.file);
@@ -144,18 +316,56 @@
 
                 content.innerHTML = marked.parse(markdown);
 
+                // Apply collapsible sections to Academy courses.
+                if (
+                    doc === "team-collaboration" ||
+                    doc === "developer-workflows"
+                ) {
+                    makeAcademySectionsCollapsible(content);
+                }
+
                 content.querySelectorAll("a").forEach(link => {
                     const href = link.getAttribute("href");
 
-                    if (href && href.endsWith(".md")) {
+                    if (!href || href.startsWith("#") || href.startsWith("http")) {
+                        return;
+                    }
+
+                    const cleanHref = href.replace(/\.md$/, "");
+
+                    const academyLinks = {
+                        "team-collaboration": "team-collaboration",
+                        "developer-workflows": "developer-workflows",
+                        "../library/index": "index",
+                        "../developer/index": "developer-overview"
+                    };
+
+                    if (article.section === "academy" && academyLinks[cleanHref]) {
+                        link.href = "article.html?doc=" +
+                            encodeURIComponent(academyLinks[cleanHref]);
+                        return;
+                    }
+
+                    if (href.endsWith(".md")) {
                         const filename = href.split("/").pop().replace(".md", "");
 
-                        link.href = "article.html?doc=" + encodeURIComponent(filename);
+                        const targetDoc =
+                            article.section === "academy" && filename === "getting-started"
+                                ? "academy-getting-started"
+                                : filename;
+
+                        if (documents[targetDoc]) {
+                            link.href = "article.html?doc=" +
+                                encodeURIComponent(targetDoc);
+                        }
                     }
                 });
 
                 breadcrumb.innerHTML =
-                    '<a href="' + sectionLink + '">' + sectionName + '</a> / ' + article.title;
+                    '<a href="' + sectionLink + '">' +
+                    sectionName +
+                    '</a> / ' +
+                    article.title;
 
             } catch (error) {
                 console.error("Documentation loading error:", error);

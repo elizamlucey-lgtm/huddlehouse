@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Workflows Knowledge Check | Huddlehouse</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .quiz-container {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 0 24px 60px;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .quiz-mascots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-mascots img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+        }
+
+        .quiz-header h1 {
+            margin-bottom: 12px;
+        }
+
+        .quiz-intro {
+            color: #657268;
+            line-height: 1.7;
+        }
+
+        .quiz-progress {
+            background: #f2f6f1;
+            border: 1px solid #dce8dc;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .quiz-progress p {
+            margin: 0;
+            font-weight: 600;
+            color: #435b49;
+        }
+
+        .quiz-question {
+            background: #ffffff;
+            border: 1px solid #e1e8df;
+            border-radius: 15px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h2 {
+            font-size: 1.1rem;
+            margin: 0 0 18px;
+            color: #354b3a;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 15px;
+            margin: 10px 0;
+            background: #f8faf7;
+            border: 1px solid #e5ebe3;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            background: #eef4ed;
+            border-color: #a9bda9;
+        }
+
+        .quiz-option input {
+            margin-top: 4px;
+            accent-color: #536f5b;
+        }
+
+        .quiz-option span {
+            line-height: 1.5;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .quiz-button {
+            border: none;
+            border-radius: 10px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: #536f5b;
+            color: white;
+            transition: background 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            background: #405a47;
+        }
+
+        .quiz-button.secondary {
+            background: #eaf0e9;
+            color: #405a47;
+        }
+
+        .quiz-button.secondary:hover {
+            background: #dce8dc;
+        }
+
+        .quiz-button:focus-visible,
+        .quiz-option:focus-within {
+            outline: 3px solid #8ba995;
+            outline-offset: 3px;
+        }
+
+        .quiz-results {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            background: #f2f6f1;
+            border: 1px solid #dce8dc;
+        }
+
+        .quiz-results h2 {
+            color: #354b3a;
+            margin-top: 0;
+        }
+
+        .quiz-results p {
+            line-height: 1.6;
+        }
+
+        .question-feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 13px 15px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .question-feedback.correct {
+            display: block;
+            background: #eaf5eb;
+            border: 1px solid #c7e2cb;
+            color: #285b35;
+        }
+
+        .question-feedback.incorrect {
+            display: block;
+            background: #fff1ec;
+            border: 1px solid #f0d0c4;
+            color: #87452f;
+        }
+
+        .quiz-question.correct-question {
+            border-color: #9ac5a0;
+        }
+
+        .quiz-question.incorrect-question {
+            border-color: #e5b6a5;
+        }
+
+        .quiz-message {
+            display: none;
+            margin: 20px 0;
+            padding: 14px 18px;
+            border-radius: 10px;
+            background: #fff4df;
+            color: #76551c;
+        }
+
+        .quiz-back-link {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #536f5b;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .quiz-back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                margin-top: 30px;
+                padding: 0 16px 40px;
+            }
+
+            .quiz-question {
+                padding: 18px;
+            }
+
+            .quiz-mascots img {
+                width: 85px;
+                height: 85px;
+            }
+
+            .quiz-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="library.html">Library</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="developer.html">Developer Hub</a>
+            <a href="academy.html" class="active">Academy</a>
+        </nav>
+    </header>
+
+    <main class="quiz-container">
+
+        <a href="article.html?doc=developer-workflows" class="quiz-back-link">
+            ← Back to Developer Workflows
+        </a>
+
+        <section class="quiz-header">
+
+            <div class="quiz-mascots">
+                <img src="assets/mascot-1.png" alt="Nova, your developer guide">
+                <img src="assets/mascot-3.png" alt="Pip, your curious learner">
+            </div>
+
+            <p><strong>HUDDLEHOUSE ACADEMY</strong></p>
+
+            <h1>Developer Workflows Knowledge Check</h1>
+
+            <p class="quiz-intro">
+                You've explored APIs, endpoints, authentication, requests,
+                responses, and troubleshooting. Now let's see what you've learned!
+            </p>
+
+        </section>
+
+        <div class="quiz-progress">
+            <p>5 Questions · 4 Correct Answers to Pass</p>
+        </div>
+
+        <div id="quizMessage" class="quiz-message" role="alert"></div>
+
+        <form id="developerQuiz">
+
+            <section class="quiz-question" data-question="0">
+                <h2>1. What is an API?</h2>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="a">
+                    <span>A type of computer hardware used to store files</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="b">
+                    <span>A way for software applications to communicate and exchange information</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="c">
+                    <span>A tool used only to design websites</span>
+                </label>
+
+                <div class="question-feedback" aria-live="polite"></div>
+            </section>
+
+            <section class="quiz-question" data-question="1">
+                <h2>2. What is an API endpoint?</h2>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="a">
+                    <span>A specific URL path used to access a resource or perform an operation</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="b">
+                    <span>A password used to log into a computer</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="c">
+                    <span>The final screen of an application</span>
+                </label>
+
+                <div class="question-feedback" aria-live="polite"></div>
+            </section>
+
+            <section class="quiz-question" data-question="2">
+                <h2>3. Which HTTP method is commonly used to retrieve information from an API?</h2>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="a">
+                    <span>DELETE</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="b">
+                    <span>POST</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="c">
+                    <span>GET</span>
+                </label>
+
+                <div class="question-feedback" aria-live="polite"></div>
+            </section>
+
+            <section class="quiz-question" data-question="3">
+                <h2>4. Why does an API use authentication?</h2>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="a">
+                    <span>To make API responses look more colorful</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="b">
+                    <span>To help verify identity and control access to resources</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="c">
+                    <span>To automatically create new projects</span>
+                </label>
+
+                <div class="question-feedback" aria-live="polite"></div>
+            </section>
+
+            <section class="quiz-question" data-question="4">
+                <h2>5. Your application receives a 401 Unauthorized response. What should you check first?</h2>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="a">
+                    <span>Whether the application has enough storage space</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="b">
+                    <span>Whether the project name is too long</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="c">
+                    <span>Whether the authentication token is present and valid</span>
+                </label>
+
+                <div class="question-feedback" aria-live="polite"></div>
+            </section>
+
+            <div class="quiz-actions">
+                <button type="submit" class="quiz-button" id="submitQuiz">
+                    Submit Answers
+                </button>
+
+                <button type="button" class="quiz-button secondary" id="retryQuiz" style="display:none;">
+                    Try Again
+                </button>
+            </div>
+
+        </form>
+
+        <section class="quiz-results" id="quizResults" aria-live="polite">
+            <h2 id="resultTitle"></h2>
+            <p id="resultScore"></p>
+            <p id="resultMessage"></p>
+
+            <div class="quiz-actions">
+                <a href="academy.html" class="quiz-button" style="text-decoration:none;">
+                    Back to Academy
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Huddlehouse. Good work happens together.</p>
+    </footer>
+
+    <script>
+        const correctAnswers = {
+            q1: "b",
+            q2: "a",
+            q3: "c",
+            q4: "b",
+            q5: "c"
+        };
+
+        const explanations = {
+            q1: "An API allows different software applications to communicate and exchange information using agreed rules.",
+
+            q2: "An endpoint is a specific URL path that an application uses to access an API resource or perform an operation.",
+
+            q3: "GET is commonly used to retrieve information. For example, GET /v1/projects requests a list of projects.",
+
+            q4: "Authentication helps verify who or what is making a request and whether access should be allowed.",
+
+            q5: "A 401 Unauthorized response usually means authentication is missing or invalid. Check that the token is included and valid."
+        };
+
+        const quizForm = document.getElementById("developerQuiz");
+        const quizMessage = document.getElementById("quizMessage");
+        const quizResults = document.getElementById("quizResults");
+        const submitButton = document.getElementById("submitQuiz");
+        const retryButton = document.getElementById("retryQuiz");
+
+        const passingScore = 4;
+        const totalQuestions = 5;
+
+        quizForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let answeredCount = 0;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const answer = quizForm.querySelector(
+                    'input[name="q' + i + '"]:checked'
+                );
+
+                if (answer) {
+                    answeredCount++;
+                }
+            }
+
+            if (answeredCount < totalQuestions) {
+                quizMessage.textContent =
+                    "Please answer all five questions before submitting your quiz.";
+
+                quizMessage.style.display = "block";
+                quizMessage.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            quizMessage.style.display = "none";
+
+            let score = 0;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const question = quizForm.querySelector(
+                    '[data-question="' + (i - 1) + '"]'
+                );
+
+                const selectedAnswer = quizForm.querySelector(
+                    'input[name="q' + i + '"]:checked'
+                );
+
+                const feedback = question.querySelector(".question-feedback");
+
+                const isCorrect =
+                    selectedAnswer.value === correctAnswers["q" + i];
+
+                question.classList.remove(
+                    "correct-question",
+                    "incorrect-question"
+                );
+
+                if (isCorrect) {
+                    score++;
+
+                    question.classList.add("correct-question");
+
+                    feedback.className = "question-feedback correct";
+
+                    feedback.innerHTML =
+                        "<strong>✓ Correct!</strong> " +
+                        explanations["q" + i];
+
+                } else {
+                    question.classList.add("incorrect-question");
+
+                    feedback.className = "question-feedback incorrect";
+
+                    feedback.innerHTML =
+                        "<strong>✗ Not quite.</strong> " +
+                        explanations["q" + i];
+                }
+            }
+
+            const passed = score >= passingScore;
+
+            const resultTitle = document.getElementById("resultTitle");
+            const resultScore = document.getElementById("resultScore");
+            const resultMessage = document.getElementById("resultMessage");
+
+            resultScore.textContent =
+                "You answered " + score + " out of " +
+                totalQuestions + " questions correctly.";
+
+            if (passed) {
+                resultTitle.textContent = "🎉 You passed!";
+
+                resultMessage.textContent =
+                    "Amazing work! Nova and Pip are proud of you. " +
+                    "You've completed the Developer Workflows learning path.";
+
+                localStorage.setItem(
+                    "huddlehouse-course-developer-workflows",
+                    "completed"
+                );
+
+            } else {
+                resultTitle.textContent = "Keep practicing!";
+
+                resultMessage.textContent =
+                    "You need at least " + passingScore +
+                    " correct answers to pass. Review the explanations " +
+                    "and try again. You've got this!";
+            }
+
+            quizResults.style.display = "block";
+            submitButton.style.display = "none";
+            retryButton.style.display = "inline-block";
+
+            quizForm.querySelectorAll("input").forEach(input => {
+                input.disabled = true;
+            });
+
+            quizResults.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        retryButton.addEventListener("click", function() {
+            quizForm.reset();
+
+            quizForm.querySelectorAll("input").forEach(input => {
+                input.disabled = false;
+            });
+
+            quizForm.querySelectorAll(".quiz-question").forEach(question => {
+                question.classList.remove(
+                    "correct-question",
+                    "incorrect-question"
+                );
+
+                const feedback = question.querySelector(".question-feedback");
+
+                feedback.className = "question-feedback";
+                feedback.textContent = "";
+            });
+
+            quizResults.style.display = "none";
+            quizMessage.style.display = "none";
+
+            submitButton.style.display = "inline-block";
+            retryButton.style.display = "none";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>

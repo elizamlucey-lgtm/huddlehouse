@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Collaboration Knowledge Check | Huddlehouse</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .quiz-container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px 60px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .quiz-progress {
+            padding: 16px 20px;
+            margin: 24px 0;
+            background: #f3f7f3;
+            border-radius: 12px;
+            color: #405b46;
+        }
+
+        .quiz-question {
+            padding: 24px;
+            margin: 22px 0;
+            border: 1px solid #e2e8e2;
+            border-radius: 14px;
+            background: #ffffff;
+        }
+
+        .quiz-question h3 {
+            margin-top: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px 15px;
+            margin: 10px 0;
+            border: 1px solid #e2e8e2;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            background: #f5f8f5;
+        }
+
+        .quiz-option input {
+            margin-top: 4px;
+        }
+
+        .quiz-option.correct {
+            background: #e8f4e9;
+            border-color: #8dbb96;
+        }
+
+        .quiz-option.incorrect {
+            background: #fff0ed;
+            border-color: #e4a69b;
+        }
+
+        .quiz-feedback {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 9px;
+            line-height: 1.6;
+        }
+
+        .quiz-feedback.correct {
+            display: block;
+            background: #e8f4e9;
+            color: #315e3a;
+        }
+
+        .quiz-feedback.incorrect {
+            display: block;
+            background: #fff0ed;
+            color: #873e32;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .quiz-button {
+            padding: 13px 22px;
+            border: none;
+            border-radius: 9px;
+            background: #405b46;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .quiz-button:hover {
+            background: #304735;
+        }
+
+        .quiz-button.secondary {
+            background: #e9eee9;
+            color: #405b46;
+        }
+
+        .quiz-results {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 14px;
+            background: #f3f7f3;
+        }
+
+        .quiz-results h2 {
+            margin-top: 0;
+        }
+
+        .quiz-results.passed {
+            background: #e8f4e9;
+        }
+
+        .quiz-results.needs-review {
+            background: #fff4e5;
+        }
+
+        .quiz-results .score {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .quiz-note {
+            color: #68746b;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-question {
+                padding: 18px;
+            }
+
+            .quiz-container {
+                margin-top: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="library.html">Library</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="developer.html">Developer Hub</a>
+            <a href="academy.html" class="active">Academy</a>
+        </nav>
+    </header>
+
+    <main class="quiz-container">
+
+        <div class="quiz-intro">
+            <p class="eyebrow">HUDDLEHOUSE ACADEMY · KNOWLEDGE CHECK</p>
+            <h1>Team Collaboration</h1>
+            <p>Let's see what you've learned with Nova and Pip!</p>
+            <p>Answer all five questions. You need at least four correct answers to pass.</p>
+        </div>
+
+        <div class="quiz-progress">
+            <strong>Knowledge Check</strong>
+            <p id="questionProgress">0 of 5 questions answered</p>
+        </div>
+
+        <form id="collaborationQuiz">
+
+            <section class="quiz-question" data-question="1">
+                <h3>1. What is the main purpose of Huddle?</h3>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="A">
+                    <span>A. Store long-term product documentation</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="B">
+                    <span>B. Share conversations, updates, and ideas</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="C">
+                    <span>C. Track employee payroll</span>
+                </label>
+
+                <div class="quiz-feedback" id="feedback1"></div>
+            </section>
+
+            <section class="quiz-question" data-question="2">
+                <h3>2. Your team is launching a new feature. Where should you organize tasks and responsibilities?</h3>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="A">
+                    <span>A. Academy</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="B">
+                    <span>B. Library</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q2" value="C">
+                    <span>C. Projects</span>
+                </label>
+
+                <div class="quiz-feedback" id="feedback2"></div>
+            </section>
+
+            <section class="quiz-question" data-question="3">
+                <h3>3. Where should the team store a reusable guide explaining how to use its new feature?</h3>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="A">
+                    <span>A. Library</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="B">
+                    <span>B. Huddle</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q3" value="C">
+                    <span>C. Projects</span>
+                </label>
+
+                <div class="quiz-feedback" id="feedback3"></div>
+            </section>
+
+            <section class="quiz-question" data-question="4">
+                <h3>4. A teammate makes an important project decision during a conversation. What should the team do?</h3>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="A">
+                    <span>A. Leave the decision in a private message</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="B">
+                    <span>B. Make sure the decision is documented somewhere the team can find it</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q4" value="C">
+                    <span>C. Assume everyone will remember it</span>
+                </label>
+
+                <div class="quiz-feedback" id="feedback4"></div>
+            </section>
+
+            <section class="quiz-question" data-question="5">
+                <h3>5. Which statement best describes how Huddle, Projects, and the Library work together?</h3>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="A">
+                    <span>A. Each area works independently and should never overlap</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="B">
+                    <span>B. The Library manages tasks, Projects handle conversations, and Huddle stores guides</span>
+                </label>
+
+                <label class="quiz-option">
+                    <input type="radio" name="q5" value="C">
+                    <span>C. Huddle supports conversations, Projects organize work, and the Library stores shared knowledge</span>
+                </label>
+
+                <div class="quiz-feedback" id="feedback5"></div>
+            </section>
+
+            <div class="quiz-actions">
+                <button type="submit" class="quiz-button" id="submitQuiz">
+                    Submit Answers
+                </button>
+
+                <button type="button" class="quiz-button secondary" id="retryQuiz" style="display:none;">
+                    Try Again
+                </button>
+
+                <a href="academy.html" class="quiz-button secondary" style="text-decoration:none;">
+                    Back to Academy
+                </a>
+            </div>
+
+        </form>
+
+        <section class="quiz-results" id="quizResults" aria-live="polite">
+            <h2 id="resultHeading"></h2>
+            <p class="score" id="resultScore"></p>
+            <p id="resultMessage"></p>
+            <p id="completionMessage"></p>
+        </section>
+
+        <p class="quiz-note">
+            Your course completion is saved in this browser.
+        </p>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Huddlehouse. Good work happens together.</p>
+    </footer>
+
+    <script>
+        const completionKey = "huddlehouse-course-team-collaboration";
+
+        const answers = {
+            q1: {
+                correct: "B",
+                explanation: "Huddle is where teammates share conversations, updates, questions, and ideas."
+            },
+            q2: {
+                correct: "C",
+                explanation: "Projects help teams organize goals, tasks, responsibilities, and progress."
+            },
+            q3: {
+                correct: "A",
+                explanation: "The Library is the shared knowledge space for guides, procedures, and reusable documentation."
+            },
+            q4: {
+                correct: "B",
+                explanation: "Important decisions should be documented somewhere teammates can find and reference later."
+            },
+            q5: {
+                correct: "C",
+                explanation: "Huddle supports conversations, Projects organize work, and the Library stores shared knowledge."
+            }
+        };
+
+        const form = document.getElementById("collaborationQuiz");
+        const questionProgress = document.getElementById("questionProgress");
+        const submitButton = document.getElementById("submitQuiz");
+        const retryButton = document.getElementById("retryQuiz");
+        const results = document.getElementById("quizResults");
+
+        function updateProgress() {
+            let answered = 0;
+
+            for (let i = 1; i <= 5; i++) {
+                if (form.querySelector(`input[name="q${i}"]:checked`)) {
+                    answered++;
+                }
+            }
+
+            questionProgress.textContent =
+                `${answered} of 5 questions answered`;
+        }
+
+        form.addEventListener("change", updateProgress);
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let score = 0;
+            let unanswered = [];
+
+            for (let i = 1; i <= 5; i++) {
+                const selected = form.querySelector(
+                    `input[name="q${i}"]:checked`
+                );
+
+                if (!selected) {
+                    unanswered.push(i);
+                }
+            }
+
+            if (unanswered.length > 0) {
+                alert("Please answer all five questions before submitting.");
+                form.querySelector(
+                    `input[name="q${unanswered[0]}"]`
+                ).focus();
+                return;
+            }
+
+            for (let i = 1; i <= 5; i++) {
+                const question = form.querySelector(
+                    `[data-question="${i}"]`
+                );
+
+                const selected = form.querySelector(
+                    `input[name="q${i}"]:checked`
+                );
+
+                const correctAnswer = answers[`q${i}`].correct;
+                const feedback = document.getElementById(`feedback${i}`);
+
+                const isCorrect = selected.value === correctAnswer;
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                question.querySelectorAll(".quiz-option").forEach(option => {
+                    const input = option.querySelector("input");
+
+                    input.disabled = true;
+
+                    if (input.value === correctAnswer) {
+                        option.classList.add("correct");
+                    } else if (input.checked) {
+                        option.classList.add("incorrect");
+                    }
+                });
+
+                feedback.className =
+                    "quiz-feedback " + (isCorrect ? "correct" : "incorrect");
+
+                feedback.innerHTML = isCorrect
+                    ? `<strong>✓ Correct!</strong> ${answers[`q${i}`].explanation}`
+                    : `<strong>✗ Not quite.</strong> The correct answer is ${correctAnswer}. ${answers[`q${i}`].explanation}`;
+            }
+
+            const passed = score >= 4;
+
+            results.style.display = "block";
+            results.className =
+                "quiz-results " + (passed ? "passed" : "needs-review");
+
+            document.getElementById("resultHeading").textContent =
+                passed ? "🎉 Excellent work!" : "Keep learning!";
+
+            document.getElementById("resultScore").textContent =
+                `${score} / 5`;
+
+            document.getElementById("resultMessage").textContent =
+                passed
+                    ? "You passed the Team Collaboration Knowledge Check!"
+                    : "You need at least 4 correct answers to pass. Review the explanations and give it another try.";
+
+            if (passed) {
+                localStorage.setItem(completionKey, "completed");
+
+                document.getElementById("completionMessage").textContent =
+                    "✓ Team Collaboration has been marked as completed in your Academy.";
+            } else {
+                document.getElementById("completionMessage").textContent =
+                    "Your course completion status has not changed.";
+            }
+
+            submitButton.style.display = "none";
+            retryButton.style.display = "inline-block";
+
+            results.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        retryButton.addEventListener("click", function() {
+            form.reset();
+
+            for (let i = 1; i <= 5; i++) {
+                const question = form.querySelector(
+                    `[data-question="${i}"]`
+                );
+
+                question.querySelectorAll(".quiz-option").forEach(option => {
+                    option.classList.remove("correct", "incorrect");
+                    option.querySelector("input").disabled = false;
+                });
+
+                const feedback = document.getElementById(`feedback${i}`);
+                feedback.className = "quiz-feedback";
+                feedback.textContent = "";
+            }
+
+            results.style.display = "none";
+            submitButton.style.display = "inline-block";
+            retryButton.style.display = "none";
+
+            updateProgress();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        updateProgress();
+    </script>
+
+</body>
+</html>
