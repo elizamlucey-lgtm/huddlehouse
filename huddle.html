@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Huddlehouse Huddle — bring your team together, share knowledge, and turn conversations into progress.">
+  <title>Huddle | Huddlehouse</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .huddle-page {
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 20px 4.5% 70px;
+    }
+
+    .huddle-hero {
+      background: linear-gradient(120deg, #e7f0e5, #f0eafa);
+      border-radius: 26px;
+      padding: 35px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .huddle-hero-copy { max-width: 650px; }
+
+    .huddle-eyebrow {
+      color: #668b70;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+
+    .huddle-hero h1 {
+      color: #293b34;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin: 0 0 14px;
+    }
+
+    .huddle-hero p:not(.huddle-eyebrow) {
+      color: #58655d;
+      font-size: 17px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .huddle-hero-art {
+      width: 220px;
+      max-width: 32%;
+      flex-shrink: 0;
+    }
+
+    .huddle-hero-art img {
+      display: block;
+      width: 100%;
+      height: 170px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .prototype-banner {
+      background: #fff8e8;
+      border: 1px solid #f1dfb6;
+      color: #765b25;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .huddle-workspace {
+      display: grid;
+      grid-template-columns: 205px minmax(0, 1fr) 245px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .huddle-panel {
+      background: #fff;
+      border: 1px solid #e9e5dd;
+      border-radius: 18px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .huddle-panel h2,
+    .huddle-panel h3 {
+      color: #293b34;
+      margin-top: 0;
+    }
+
+    .huddle-panel h2 { font-size: 18px; }
+    .huddle-panel h3 { font-size: 15px; }
+
+    .channel-heading {
+      font-size: 11px;
+      color: #89928b;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      margin: 23px 0 10px;
+    }
+
+    .channel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .channel-button {
+      border: 0;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 9px;
+      color: #59645d;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+
+    .channel-button:hover,
+    .channel-button.active {
+      background: #edf4ed;
+      color: #456b4e;
+      font-weight: 700;
+    }
+
+    .channel-button:focus-visible,
+    .resource-link:focus-visible,
+    .huddle-button:focus-visible {
+      outline: 3px solid #8ba995;
+      outline-offset: 3px;
+    }
+
+    .channel-description {
+      color: #778078;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: -5px 0 20px;
+    }
+
+    .conversation-header {
+      border-bottom: 1px solid #eeeae2;
+      padding-bottom: 17px;
+      margin-bottom: 20px;
+    }
+
+    .conversation-header h2 {
+      margin: 0 0 5px;
+      color: #293b34;
+      font-size: 21px;
+    }
+
+    .conversation-header p {
+      margin: 0;
+      color: #7b857e;
+      font-size: 13px;
+    }
+
+    .message {
+      display: flex;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0eee9;
+    }
+
+    .message:last-child { border-bottom: 0; }
+
+    .avatar {
+      flex: 0 0 38px;
+      height: 38px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+    }
+
+    .avatar.green { background: #e4f0e4; }
+    .avatar.purple { background: #eee7f8; }
+    .avatar.yellow { background: #fff1cf; }
+    .avatar.blue { background: #e4f0f6; }
+
+    .message-body { min-width: 0; }
+
+    .message-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .message-meta strong {
+      color: #303b33;
+      font-size: 13px;
+    }
+
+    .message-meta span {
+      color: #929991;
+      font-size: 11px;
+    }
+
+    .message-body p {
+      color: #58635b;
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .message-tag {
+      display: inline-block;
+      margin-top: 9px;
+      background: #f0f4eb;
+      color: #66836a;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .message-tag.purple-tag {
+      background: #f0eafa;
+      color: #78639d;
+    }
+
+    .message-tag.yellow-tag {
+      background: #fff3d8;
+      color: #8c6b2e;
+    }
+
+    .pinned-resource {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 13px 0;
+    }
+
+    .resource-icon {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      background: #f0f4eb;
+      border-radius: 10px;
+    }
+
+    .resource-link {
+      color: #557b60;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .resource-description {
+      display: block;
+      color: #8b938d;
+      font-size: 11px;
+      font-weight: 400;
+      margin-top: 3px;
+    }
+
+    .activity-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0eee9;
+      color: #647068;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .activity-item:last-child { border-bottom: 0; }
+
+    .activity-item strong {
+      color: #3c5142;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .alien-tip {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: #f0eafa;
+      border-radius: 15px;
+      padding: 13px;
+      margin-top: 20px;
+    }
+
+    .alien-tip img {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .alien-tip p {
+      color: #665779;
+      font-size: 11px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .alien-tip strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .huddle-quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .quick-link-card {
+      background: #fff;
+      border: 1px solid #e9e5dd;
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .quick-link-card .quick-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .quick-link-card h3 {
+      font-size: 15px;
+      color: #293b34;
+      margin: 0 0 7px;
+    }
+
+    .quick-link-card p {
+      color: #737d75;
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 0 0 12px;
+    }
+
+    .quick-link-card a {
+      color: #64876c;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .huddle-footer {
+      margin-top: 35px;
+      padding: 20px;
+      text-align: center;
+      color: #89928b;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1050px) {
+      .huddle-workspace {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+
+      .huddle-right-panel {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .huddle-right-panel > h2 { grid-column: 1 / -1; }
+      .huddle-quick-links { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .huddle-page { padding: 12px 5% 45px; }
+
+      .huddle-hero {
+        padding: 25px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .huddle-hero-art {
+        width: 180px;
+        max-width: 100%;
+        align-self: center;
+      }
+
+      .huddle-workspace { grid-template-columns: 1fr; }
+
+      .huddle-sidebar {
+        order: 1;
+      }
+
+      .huddle-main {
+        order: 2;
+      }
+
+      .huddle-right-panel {
+        order: 3;
+        grid-template-columns: 1fr;
+      }
+
+      .huddle-right-panel > h2 { grid-column: auto; }
+      .huddle-quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="huddle.html" class="active">Huddle</a>
+      <a href="projects.html">Projects</a>
+      <a href="library.html">Library</a>
+      <a href="developer.html">Developer Hub</a>
+      <a href="academy.html">Academy</a>
+    </nav>
+  </header>
+
+  <main class="huddle-page">
+    <section class="huddle-hero">
+      <div class="huddle-hero-copy">
+        <p class="huddle-eyebrow">Your team's conversation hub</p>
+        <h1>Big ideas start with a huddle.</h1>
+        <p>Share updates, ask questions, solve problems, and turn good conversations into great work.</p>
+      </div>
+      <div class="huddle-hero-art">
+        <img src="assets/mascot-1.png" alt="Nova, a friendly Huddlehouse alien teammate">
+      </div>
+    </section>
+
+    <div class="prototype-banner">
+      <strong>Demo workspace:</strong> These are fictional team conversations and sample interactions created to demonstrate the Huddlehouse experience.
+    </div>
+
+    <section class="huddle-workspace" aria-label="Huddle workspace">
+      <aside class="huddle-panel huddle-sidebar">
+        <h2>Team Huddle</h2>
+        <p class="channel-description">Good work happens when everyone has a place to share.</p>
+
+        <p class="channel-heading">Your channels</p>
+        <div class="channel-list" role="group" aria-label="Choose a channel">
+          <button class="channel-button active" data-channel="general" aria-pressed="true"># general</button>
+          <button class="channel-button" data-channel="feedback" aria-pressed="false"># customer-feedback</button>
+          <button class="channel-button" data-channel="docs" aria-pressed="false"># documentation</button>
+          <button class="channel-button" data-channel="engineering" aria-pressed="false"># engineering</button>
+          <button class="channel-button" data-channel="releases" aria-pressed="false"># release-readiness</button>
+        </div>
+
+        <p class="channel-heading">Team resources</p>
+        <div class="channel-list">
+          <a class="channel-button" href="article.html?doc=huddle-style-guide">📘 Style Guide</a>
+          <a class="channel-button" href="article.html?doc=huddle-ai-guidelines">🤖 AI Guidelines</a>
+          <a class="channel-button" href="article.html?doc=huddle-feedback">🗂 Feedback Process</a>
+        </div>
+      </aside>
+
+      <section class="huddle-panel huddle-main" aria-live="polite">
+        <div class="conversation-header">
+          <h2 id="channel-title"># general</h2>
+          <p id="channel-description">The place for team updates, questions, and good ideas.</p>
+        </div>
+        <div id="conversation-feed"></div>
+      </section>
+
+      <aside class="huddle-panel huddle-right-panel">
+        <h2>Huddle highlights</h2>
+
+        <h3>📌 Pinned resources</h3>
+
+        <div class="pinned-resource">
+          <span class="resource-icon">📘</span>
+          <div>
+            <a class="resource-link" href="article.html?doc=huddle-style-guide">
+              Documentation Style Guide
+              <span class="resource-description">Our shared writing standards</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="pinned-resource">
+          <span class="resource-icon">🤖</span>
+          <div>
+            <a class="resource-link" href="article.html?doc=huddle-ai-guidelines">
+              AI Usage Guidelines
+              <span class="resource-description">Use AI thoughtfully and safely</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="pinned-resource">
+          <span class="resource-icon">📝</span>
+          <div>
+            <a class="resource-link" href="article.html?doc=huddle-release-communications">
+              Release Communication Guide
+              <span class="resource-description">Keep everyone in the loop</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="channel-heading">Recent activity</p>
+
+        <div class="activity-item">
+          <strong>Documentation update</strong>
+          A troubleshooting guide was flagged for review.
+        </div>
+        <div class="activity-item">
+          <strong>Engineering response</strong>
+          A configuration question received technical clarification.
+        </div>
+        <div class="activity-item">
+          <strong>Release planning</strong>
+          The team started preparing the next documentation update.
+        </div>
+
+        <div class="alien-tip">
+          <img src="assets/mascot-2.png" alt="Pip, the curious Huddlehouse quality helper">
+          <p><strong>Pip's helpful tip</strong>Good feedback is specific. Tell the team what happened, what you expected, and what you tried.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="huddle-quick-links" aria-label="Explore Huddle resources">
+      <article class="quick-link-card">
+        <div class="quick-icon">📘</div>
+        <h3>Our Style Guide</h3>
+        <p>Learn how Huddlehouse writers keep content clear, consistent, and helpful.</p>
+        <a href="article.html?doc=huddle-style-guide">Explore writing standards →</a>
+      </article>
+
+      <article class="quick-link-card">
+        <div class="quick-icon">🤖</div>
+        <h3>Working with AI</h3>
+        <p>See how our team uses AI to support quality without giving up human judgment.</p>
+        <a href="article.html?doc=huddle-ai-guidelines">Explore AI guidelines →</a>
+      </article>
+
+      <article class="quick-link-card">
+        <div class="quick-icon">📣</div>
+        <h3>Release Communications</h3>
+        <p>Discover how teams turn product changes into useful customer updates.</p>
+        <a href="article.html?doc=huddle-release-communications">Explore release guidance →</a>
+      </article>
+    </section>
+
+    <div class="huddle-footer">
+      Made for curious minds, helpful teammates, and the occasional alien visitor. 👽
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Huddlehouse. Good work happens together.</p>
+  </footer>
+
+  <script>
+    const channelData = {
+      general: {
+        title: "# general",
+        description: "The place for team updates, questions, and good ideas.",
+        messages: [
+          {
+            name: "Nova",
+            role: "Team Coordinator",
+            time: "9:05 AM",
+            avatar: "👽",
+            color: "green",
+            text: "Good morning, team! This week we're focusing on making our documentation easier to find, understand, and use. Remember: our goal is to help customers succeed, not just fill pages.",
+            tag: "Team update"
+          },
+          {
+            name: "Pip",
+            role: "Quality Explorer",
+            time: "9:12 AM",
+            avatar: "👾",
+            color: "purple",
+            text: "I found a tiny mystery! A few help articles use different names for the same configuration setting. Should we check the Style Guide and make the wording consistent?",
+            tag: "Question",
+            tagClass: "purple-tag"
+          },
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "9:18 AM",
+            avatar: "📝",
+            color: "yellow",
+            text: "Absolutely. I'll compare the affected pages against our approved terminology and create a documentation task for anything that needs updating.",
+            tag: "Follow-up"
+          },
+          {
+            name: "Leo",
+            role: "Engineering",
+            time: "9:24 AM",
+            avatar: "💻",
+            color: "blue",
+            text: "I can confirm the official setting name and behavior before the changes are published. Please link me to the examples you're reviewing.",
+            tag: "Engineering review"
+          }
+        ]
+      },
+      feedback: {
+        title: "# customer-feedback",
+        description: "Customer questions are clues that help us improve the product and its documentation.",
+        messages: [
+          {
+            name: "Sam",
+            role: "Customer Support",
+            time: "10:02 AM",
+            avatar: "🎧",
+            color: "blue",
+            text: "A customer reported that the installation guide skips an important configuration prerequisite. They followed the steps but couldn't complete the setup.",
+            tag: "New feedback",
+            tagClass: "yellow-tag"
+          },
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "10:15 AM",
+            avatar: "📝",
+            color: "yellow",
+            text: "Thanks for flagging this. I'll reproduce the documented workflow, identify the missing prerequisite, and compare the instructions with the approved product behavior.",
+            tag: "Documentation investigation"
+          },
+          {
+            name: "Leo",
+            role: "Engineering",
+            time: "10:27 AM",
+            avatar: "💻",
+            color: "blue",
+            text: "The setup requires a connection profile before the installation command is run. I'll verify the exact requirement and send the supported example.",
+            tag: "Technical clarification"
+          },
+          {
+            name: "Nova",
+            role: "Team Coordinator",
+            time: "10:35 AM",
+            avatar: "👽",
+            color: "green",
+            text: "Great teamwork! Let's track this in Projects, update the guide, and share the fix with Support once the change is published.",
+            tag: "Next step"
+          }
+        ]
+      },
+      docs: {
+        title: "# documentation",
+        description: "A shared space for writing questions, editorial decisions, and content improvements.",
+        messages: [
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "11:03 AM",
+            avatar: "📝",
+            color: "yellow",
+            text: "I've updated the draft installation guide. The revised version now includes the prerequisite, the command, an expected result, and a troubleshooting note.",
+            tag: "Draft updated"
+          },
+          {
+            name: "Pip",
+            role: "Quality Explorer",
+            time: "11:10 AM",
+            avatar: "👾",
+            color: "purple",
+            text: "Quality-check question! Did we check the terminology, heading structure, and command formatting against the Style Guide?",
+            tag: "Editorial check",
+            tagClass: "purple-tag"
+          },
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "11:16 AM",
+            avatar: "📝",
+            color: "yellow",
+            text: "Yes. I also ran an editorial review to identify unclear wording and missing context. The suggestions were reviewed manually before I changed the draft.",
+            tag: "Review complete"
+          },
+          {
+            name: "Nova",
+            role: "Team Coordinator",
+            time: "11:20 AM",
+            avatar: "👽",
+            color: "green",
+            text: "Perfect. The next step is Engineering verification. Clear writing and correct technical details belong together!",
+            tag: "Ready for review"
+          }
+        ]
+      },
+      engineering: {
+        title: "# engineering",
+        description: "Work with engineers to verify behavior, examples, commands, and technical details.",
+        messages: [
+          {
+            name: "Leo",
+            role: "Engineering",
+            time: "1:02 PM",
+            avatar: "💻",
+            color: "blue",
+            text: "The installation workflow has three required steps: create the connection profile, validate access, and run the installation command. The guide should show them in that order.",
+            tag: "Workflow clarification"
+          },
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "1:14 PM",
+            avatar: "📝",
+            color: "yellow",
+            text: "Thanks! I'll update the procedure and include the expected output after each important step so readers can confirm they're on track.",
+            tag: "Documentation update"
+          },
+          {
+            name: "Pip",
+            role: "Quality Explorer",
+            time: "1:20 PM",
+            avatar: "👾",
+            color: "purple",
+            text: "Can we verify the command options against the current product version? I don't want our examples teaching an imaginary feature!",
+            tag: "Verification reminder",
+            tagClass: "purple-tag"
+          },
+          {
+            name: "Leo",
+            role: "Engineering",
+            time: "1:28 PM",
+            avatar: "💻",
+            color: "blue",
+            text: "Confirmed. I'll review the command and expected output before the documentation is approved.",
+            tag: "Engineering action"
+          }
+        ]
+      },
+      releases: {
+        title: "# release-readiness",
+        description: "Coordinate documentation, product changes, and release communications.",
+        messages: [
+          {
+            name: "Nova",
+            role: "Team Coordinator",
+            time: "2:00 PM",
+            avatar: "👽",
+            color: "green",
+            text: "Our next release includes an updated setup workflow. Let's confirm which guides, examples, and reference pages need attention.",
+            tag: "Release planning"
+          },
+          {
+            name: "Maya",
+            role: "Technical Writer",
+            time: "2:08 PM",
+            avatar: "📝",
+            color: "yellow",
+            text: "I'll review the affected documentation, prepare the updated procedure, and draft release notes using the approved product changes.",
+            tag: "Documentation plan"
+          },
+          {
+            name: "Leo",
+            role: "Engineering",
+            time: "2:16 PM",
+            avatar: "💻",
+            color: "blue",
+            text: "I'll provide the confirmed behavior changes and flag any command or configuration changes that need to appear in the documentation.",
+            tag: "Engineering input"
+          },
+          {
+            name: "Pip",
+            role: "Quality Explorer",
+            time: "2:22 PM",
+            avatar: "👾",
+            color: "purple",
+            text: "I'll remind everyone to check the links, examples, terminology, and final review checklist before we call this ready!",
+            tag: "Quality reminder",
+            tagClass: "purple-tag"
+          }
+        ]
+      }
+    };
+
+    const channelButtons = document.querySelectorAll(".channel-button[data-channel]");
+    const title = document.getElementById("channel-title");
+    const description = document.getElementById("channel-description");
+    const feed = document.getElementById("conversation-feed");
+
+    function showChannel(channelName) {
+      const channel = channelData[channelName];
+      if (!channel) return;
+
+      title.textContent = channel.title;
+      description.textContent = channel.description;
+
+      feed.replaceChildren();
+
+      channel.messages.forEach(message => {
+        const article = document.createElement("article");
+        article.className = "message";
+
+        const avatar = document.createElement("div");
+        avatar.className = "avatar " + message.color;
+        avatar.textContent = message.avatar;
+        avatar.setAttribute("aria-hidden", "true");
+
+        const body = document.createElement("div");
+        body.className = "message-body";
+
+        const meta = document.createElement("div");
+        meta.className = "message-meta";
+
+        const name = document.createElement("strong");
+        name.textContent = message.name;
+
+        const role = document.createElement("span");
+        role.textContent = message.role;
+
+        const time = document.createElement("span");
+        time.textContent = message.time;
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = message.text;
+
+        const tag = document.createElement("span");
+        tag.className = "message-tag " + (message.tagClass || "");
+        tag.textContent = message.tag;
+
+        meta.append(name, role, time);
+        body.append(meta, paragraph, tag);
+        article.append(avatar, body);
+        feed.appendChild(article);
+      });
+
+      channelButtons.forEach(button => {
+        const selected = button.dataset.channel === channelName;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+    }
+
+    channelButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        showChannel(button.dataset.channel);
+      });
+    });
+
+    showChannel("general");
+  </script>
+</body>
+</html>
