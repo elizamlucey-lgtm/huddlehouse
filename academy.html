@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huddlehouse Academy</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .academy-progress {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: #f3f7f3;
+      border: 1px solid #dce8dd;
+      border-radius: 12px;
+      color: #405b46;
+    }
+
+    .academy-progress p {
+      margin: 0;
+    }
+
+    .course-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 4px 0 14px;
+      padding: 6px 11px;
+      border-radius: 20px;
+      background: #edf1ed;
+      color: #536257;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .course-status.completed {
+      background: #e3f2e5;
+      color: #347346;
+    }
+
+    .course-status .status-icon {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="logo">Huddlehouse<span>.</span></a>
+
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="library.html">Library</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="developer.html">Developer Hub</a>
+      <a href="academy.html" class="active">Academy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">LEARN · PRACTICE · GROW</p>
+      <h1>Welcome to Huddlehouse Academy</h1>
+      <p>Build confidence, discover new workflows, and learn how to get more out of working together.</p>
+
+      <div class="academy-progress" id="academyProgress">
+        <p id="progressMessage">Your learning journey starts here. Choose a learning path to begin!</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Explore learning paths</h2>
+      <p>Choose a path based on your role and what you want to accomplish.</p>
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+          <img src="assets/mascot-1.png" alt="Huddlehouse mascot welcoming new users">
+
+          <h2>Getting Started</h2>
+
+          <span class="course-status" id="gettingStartedStatus">
+            <span class="status-icon">○</span>
+            Not started
+          </span>
+
+          <p>Learn the essentials, set up your workspace, and find your way around Huddlehouse.</p>
+
+          <a href="article.html?doc=academy-getting-started" id="gettingStartedLink">
+            Explore learning path <span>→</span>
+          </a>
+        </article>
+
+        <article class="feature-card">
+          <img src="assets/mascot-3.png" alt="Huddlehouse mascot organizing documents">
+
+          <h2>Team Collaboration</h2>
+
+          <span class="course-status" id="teamCollaborationStatus">
+            <span class="status-icon">○</span>
+            Not started
+          </span>
+
+          <p>Discover how to organize projects, share knowledge, and work across teams.</p>
+
+          <a href="article.html?doc=team-collaboration" id="teamCollaborationLink">
+            Explore learning path <span>→</span>
+          </a>
+        </article>
+
+        <article class="feature-card">
+          <img src="assets/mascot-4.png" alt="Huddlehouse mascot working on a laptop">
+
+          <h2>Developer Workflows</h2>
+
+          <span class="course-status" id="developerWorkflowsStatus">
+            <span class="status-icon">○</span>
+            Not started
+          </span>
+
+          <p>Learn how APIs work, understand integrations, explore authentication, and navigate developer resources.</p>
+
+          <a href="article.html?doc=developer-workflows" id="developerWorkflowsLink">
+            Explore learning path <span>→</span>
+          </a>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Huddlehouse. Good work happens together.</p>
+  </footer>
+
+  <script>
+    const gettingStartedCompleted =
+      localStorage.getItem("huddlehouse-course-getting-started") === "completed";
+
+    const teamCollaborationCompleted =
+      localStorage.getItem("huddlehouse-course-team-collaboration") === "completed";
+
+    const developerWorkflowsCompleted =
+      localStorage.getItem("huddlehouse-course-developer-workflows") === "completed";
+
+    const gettingStartedStatus =
+      document.getElementById("gettingStartedStatus");
+
+    const teamCollaborationStatus =
+      document.getElementById("teamCollaborationStatus");
+
+    const developerWorkflowsStatus =
+      document.getElementById("developerWorkflowsStatus");
+
+    const progressMessage =
+      document.getElementById("progressMessage");
+
+    const gettingStartedLink =
+      document.getElementById("gettingStartedLink");
+
+    const teamCollaborationLink =
+      document.getElementById("teamCollaborationLink");
+
+    const developerWorkflowsLink =
+      document.getElementById("developerWorkflowsLink");
+
+    function markCompleted(statusElement) {
+      statusElement.classList.add("completed");
+      statusElement.innerHTML =
+        '<span class="status-icon">✓</span> Completed';
+    }
+
+    if (gettingStartedCompleted) {
+      markCompleted(gettingStartedStatus);
+
+      gettingStartedLink.innerHTML =
+        'Review course material <span>→</span>';
+    }
+
+    if (teamCollaborationCompleted) {
+      markCompleted(teamCollaborationStatus);
+
+      teamCollaborationLink.innerHTML =
+        'Review course material <span>→</span>';
+    }
+
+    if (developerWorkflowsCompleted) {
+      markCompleted(developerWorkflowsStatus);
+
+      developerWorkflowsLink.innerHTML =
+        'Review course material <span>→</span>';
+    }
+
+    const completedCourses = [
+      gettingStartedCompleted,
+      teamCollaborationCompleted,
+      developerWorkflowsCompleted
+    ].filter(Boolean).length;
+
+    if (completedCourses === 3) {
+      progressMessage.textContent =
+        "🎉 Amazing work! You've completed all three Huddlehouse Academy learning paths. You're officially a Huddlehouse learning superstar!";
+    } else if (completedCourses === 2) {
+      progressMessage.textContent =
+        "🎉 Fantastic progress! You've completed 2 of 3 learning paths. One more to go!";
+    } else if (completedCourses === 1) {
+      progressMessage.textContent =
+        "🎉 Great work! You've completed 1 of 3 learning paths. Keep exploring and learning!";
+    } else {
+      progressMessage.textContent =
+        "Your learning journey starts here. Choose a learning path to begin!";
+    }
+  </script>
+
+</body>
+</html>
