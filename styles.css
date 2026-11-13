@@ -450,3 +450,129 @@
         font-size: 1.4rem;
     }
 }
+
+
+/* =========================================
+   PORTFOLIO WELCOME BANNER
+   ========================================= */
+
+.portfolio-welcome {
+  max-width: 1180px;
+  margin: 32px auto 20px;
+  padding: 36px 42px;
+  background: linear-gradient(135deg, #f0edff 0%, #f5f1ff 55%, #eaf5ff 100%);
+  border: 1px solid #e2dcf8;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-welcome::after {
+  content: "✦";
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 90px;
+  line-height: 1;
+  color: rgba(113, 91, 190, 0.10);
+  pointer-events: none;
+}
+
+.portfolio-welcome-content {
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+}
+
+.portfolio-welcome .eyebrow {
+  margin: 0 0 10px;
+  color: #7562b5;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.portfolio-welcome h2 {
+  margin: 0 0 14px;
+  color: #282442;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.2;
+}
+
+.portfolio-welcome p {
+  color: #514d65;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.portfolio-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 30px;
+  margin: 22px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portfolio-highlights li {
+  position: relative;
+  padding-left: 28px;
+  color: #38334f;
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.portfolio-highlights li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: #8872cc;
+  font-size: 1rem;
+}
+
+.portfolio-welcome .portfolio-welcome-note {
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(113, 91, 190, 0.18);
+  color: #62558f;
+  font-weight: 600;
+}
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+  .portfolio-welcome {
+    margin: 22px 18px 16px;
+    padding: 28px 24px;
+  }
+
+  .portfolio-highlights {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .portfolio-welcome::after {
+    right: 15px;
+    top: 12px;
+    font-size: 65px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-welcome {
+    margin: 16px 12px;
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .portfolio-welcome h2 {
+    font-size: 1.65rem;
+  }
+
+  .portfolio-welcome p,
+  .portfolio-highlights li {
+    font-size: 0.92rem;
+  }
+}
