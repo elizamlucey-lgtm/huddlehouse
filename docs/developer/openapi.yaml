@@ -1,0 +1,425 @@
+openapi: 3.0.3
+
+info:
+  title: Huddlehouse API
+  version: 1.0.0
+  description: |
+    The Huddlehouse REST API allows developers to manage
+    workspaces, projects, and shared documents.
+
+    This specification describes a fictional API created
+    for a technical writing portfolio project.
+
+servers:
+  - url: https://api.huddlehouse.example/v1
+    description: Example API server (not a live service)
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Workspaces
+    description: Retrieve workspace information.
+  - name: Projects
+    description: Create and retrieve projects.
+  - name: Documents
+    description: Create and retrieve shared documents.
+
+paths:
+  /workspaces:
+    get:
+      tags:
+        - Workspaces
+      summary: List workspaces
+      description: Retrieves workspaces available to the authenticated account.
+      operationId: listWorkspaces
+      responses:
+        '200':
+          description: Workspaces retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workspace'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+              example:
+                data:
+                  - id: 7f3a2c91-8d4e-4b6f-a921-2c5d8e7f1043
+                    name: Product Development
+                    description: Workspace for product and engineering teams
+                    created_at: '2026-10-15T14:30:00Z'
+                pagination:
+                  has_more: false
+                  next_cursor: null
+
+  /workspaces/{workspaceId}:
+    get:
+      tags:
+        - Workspaces
+      summary: Retrieve a workspace
+      description: Retrieves details for a specific workspace.
+      operationId: getWorkspace
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          description: Unique identifier of the workspace.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workspace retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects:
+    get:
+      tags:
+        - Projects
+      summary: List projects
+      description: Retrieves projects accessible to the authenticated account.
+      operationId: listProjects
+      parameters:
+        - name: workspace_id
+          in: query
+          required: false
+          description: Filter projects by workspace.
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          required: false
+          description: Number of results to return.
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - name: cursor
+          in: query
+          required: false
+          description: Pagination cursor from a previous response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Projects retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags:
+        - Projects
+      summary: Create a project
+      description: Creates a project in the specified workspace.
+      operationId: createProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: Project created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}:
+    get:
+      tags:
+        - Projects
+      summary: Retrieve a project
+      description: Retrieves details for a specific project.
+      operationId: getProject
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: Unique identifier of the project.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Project retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /documents:
+    get:
+      tags:
+        - Documents
+      summary: List documents
+      description: Retrieves documents available to the authenticated account.
+      operationId: listDocuments
+      parameters:
+        - name: workspace_id
+          in: query
+          required: false
+          description: Filter documents by workspace.
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          required: false
+          description: Number of results to return.
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - name: cursor
+          in: query
+          required: false
+          description: Pagination cursor from a previous response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Documents retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Document'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      tags:
+        - Documents
+      summary: Create a document
+      description: Creates a document in the specified workspace.
+      operationId: createDocument
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDocumentRequest'
+      responses:
+        '201':
+          description: Document created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /documents/{documentId}:
+    get:
+      tags:
+        - Documents
+      summary: Retrieve a document
+      description: Retrieves a specific document.
+      operationId: getDocument
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: Unique identifier of the document.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Document retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Workspace:
+      type: object
+      required:
+        - id
+        - name
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique workspace identifier.
+        name:
+          type: string
+          description: Workspace name.
+        description:
+          type: string
+          description: Workspace description.
+        created_at:
+          type: string
+          format: date-time
+          description: Workspace creation timestamp.
+
+    Project:
+      type: object
+      required:
+        - id
+        - workspace_id
+        - name
+        - status
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+        created_at:
+          type: string
+          format: date-time
+
+    Document:
+      type: object
+      required:
+        - id
+        - workspace_id
+        - title
+        - content
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    Pagination:
+      type: object
+      properties:
+        has_more:
+          type: boolean
+        next_cursor:
+          type: string
+          nullable: true
+
+    CreateProjectRequest:
+      type: object
+      required:
+        - workspace_id
+        - name
+      properties:
+        workspace_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+
+    CreateDocumentRequest:
+      type: object
+      required:
+        - workspace_id
+        - title
+        - content
+      properties:
+        workspace_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 1
+        content:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+
+  responses:
+    BadRequest:
+      description: Request contains invalid parameters or data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    ValidationError:
+      description: Request data failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

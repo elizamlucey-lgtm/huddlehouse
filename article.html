@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +15,9 @@
 
         <nav class="main-nav">
             <a href="index.html">Home</a>
-            <a href="library.html" class="active">Library</a>
+            <a href="library.html">Library</a>
             <a href="index.html#projects">Projects</a>
-            <a href="index.html#developer-hub">Developer Hub</a>
+            <a href="developer.html" class="active">Developer Hub</a>
             <a href="index.html#academy">Academy</a>
         </nav>
     </header>
@@ -24,20 +25,21 @@
     <main class="article-layout">
 
         <aside class="article-sidebar">
-            <a href="library.html" class="back-link">← Back to Library</a>
+            <a href="developer.html" class="back-link" id="back-link">← Back to Developer Hub</a>
 
-            <h3>Huddlehouse Library</h3>
+            <h3 id="sidebar-heading">Developer Hub</h3>
 
-            <nav class="article-nav">
-                <a href="article.html?doc=index">Library Overview</a>
-                <a href="article.html?doc=getting-started">Getting Started</a>
-                <a href="article.html?doc=troubleshooting">Troubleshooting</a>
+            <nav class="article-nav" id="article-nav">
+                <a href="article.html?doc=quickstart">API Quickstart</a>
+                <a href="article.html?doc=authentication">Authentication</a>
+                <a href="article.html?doc=api-reference">API Reference</a>
+                <a href="article.html?doc=errors">Errors & Troubleshooting</a>
             </nav>
         </aside>
 
         <article class="article-content">
             <div id="article-breadcrumb">
-                <a href="library.html">Library</a> / Documentation
+                <a href="developer.html">Developer Hub</a> / Documentation
             </div>
 
             <div id="markdown-content">
@@ -55,30 +57,81 @@
         const documents = {
             "index": {
                 file: "docs/library/index.md",
-                title: "Library Overview"
+                title: "Library Overview",
+                section: "library"
             },
             "getting-started": {
                 file: "docs/library/getting-started.md",
-                title: "Getting Started with Huddlehouse"
+                title: "Getting Started with Huddlehouse",
+                section: "library"
             },
             "troubleshooting": {
                 file: "docs/library/troubleshooting.md",
-                title: "Troubleshooting Huddlehouse"
+                title: "Troubleshooting Huddlehouse",
+                section: "library"
+            },
+            "quickstart": {
+                file: "docs/developer/quickstart.md",
+                title: "API Quickstart",
+                section: "developer"
+            },
+            "authentication": {
+                file: "docs/developer/authentication.md",
+                title: "API Authentication",
+                section: "developer"
+            },
+            "api-reference": {
+                file: "docs/developer/api-reference.md",
+                title: "API Reference",
+                section: "developer"
+            },
+            "errors": {
+                file: "docs/developer/errors.md",
+                title: "Errors & Troubleshooting",
+                section: "developer"
             }
         };
+
+        const libraryNavigation = `
+            <a href="article.html?doc=index">Library Overview</a>
+            <a href="article.html?doc=getting-started">Getting Started</a>
+            <a href="article.html?doc=troubleshooting">Troubleshooting</a>
+        `;
+
+        const developerNavigation = `
+            <a href="article.html?doc=quickstart">API Quickstart</a>
+            <a href="article.html?doc=authentication">Authentication</a>
+            <a href="article.html?doc=api-reference">API Reference</a>
+            <a href="article.html?doc=errors">Errors & Troubleshooting</a>
+        `;
 
         async function loadArticle() {
             const params = new URLSearchParams(window.location.search);
             const doc = params.get("doc");
             const article = documents[doc];
             const content = document.getElementById("markdown-content");
+            const breadcrumb = document.getElementById("article-breadcrumb");
+            const sidebarHeading = document.getElementById("sidebar-heading");
+            const articleNav = document.getElementById("article-nav");
+            const backLink = document.getElementById("back-link");
 
             if (!article) {
-                content.innerHTML = "<h1>Article not found</h1><p>Select an article from the Library navigation.</p>";
+                content.innerHTML =
+                    "<h1>Article not found</h1><p>Select a resource from the Library or Developer Hub.</p>";
                 return;
             }
 
+            const isDeveloper = article.section === "developer";
+
+            const sectionName = isDeveloper ? "Developer Hub" : "Library";
+            const sectionLink = isDeveloper ? "developer.html" : "library.html";
+
             document.title = article.title + " | Huddlehouse";
+
+            sidebarHeading.textContent = sectionName;
+            articleNav.innerHTML = isDeveloper ? developerNavigation : libraryNavigation;
+            backLink.href = sectionLink;
+            backLink.textContent = "← Back to " + sectionName;
 
             try {
                 const response = await fetch(article.file);
@@ -95,18 +148,21 @@
                     const href = link.getAttribute("href");
 
                     if (href && href.endsWith(".md")) {
-                        const name = href.replace(".md", "");
-                        link.href = "article.html?doc=" + encodeURIComponent(name);
+                        const filename = href.split("/").pop().replace(".md", "");
+
+                        link.href = "article.html?doc=" + encodeURIComponent(filename);
                     }
                 });
 
-                document.getElementById("article-breadcrumb").innerHTML =
-                    '<a href="library.html">Library</a> / ' + article.title;
+                breadcrumb.innerHTML =
+                    '<a href="' + sectionLink + '">' + sectionName + '</a> / ' + article.title;
 
             } catch (error) {
+                console.error("Documentation loading error:", error);
+
                 content.innerHTML =
                     "<h1>Unable to load documentation</h1>" +
-                    "<p>Refresh the page or return to the Library.</p>";
+                    "<p>Check that the documentation file exists and try refreshing the page.</p>";
             }
         }
 
