@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Huddlehouse is your team's home for projects, knowledge, collaboration, and learning.">
+  <title>Huddlehouse — Good work happens together</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Huddlehouse home">
+      <span class="brand-mark" aria-hidden="true">✦</span><span>huddlehouse</span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <a href="#platform">Product <span>⌄</span></a>
+      <a href="#platform">Solutions <span>⌄</span></a>
+      <a href="#academy">Resources <span>⌄</span></a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="header-actions"><a class="search" href="#platform" aria-label="Search">⌕</a><a class="button button-outline small" href="#signin">Sign in</a><a class="button button-dark small" href="#get-started">Get started free <span>→</span></a></div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">A happier place to get things done</p>
+        <h1 id="hero-title">Good work<br>happens together.</h1>
+        <p class="hero-description">Your team’s home for projects, knowledge, collaboration, and learning.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#get-started">Get started free <span>→</span></a><a class="button button-outline" href="#platform">Explore the platform</a></div>
+      </div>
+      <div class="hero-art"><img src="assets/hero-aliens.png" alt="Friendly little alien teammates collaborating around a shared workspace"></div>
+    </section>
+
+    <section id="platform" class="features" aria-label="Explore the Huddlehouse platform">
+      <article class="feature-card" id="huddle"><img src="assets/mascot-1.png" alt="Alien mascot sharing a document"><h2>Huddle</h2><p>Chat, share updates, and keep everyone in sync.</p><a href="#huddle">Start collaborating <span>→</span></a></article>
+      <article class="feature-card" id="projects"><img src="assets/mascot-2.png" alt="Alien mascot organizing a checklist"><h2>Projects</h2><p>Plan, organize, and track work from idea to launch.</p><a href="#projects">Explore projects <span>→</span></a></article>
+      <article class="feature-card" id="library"><img src="assets/mascot-3.png" alt="Alien mascot reading a book"><h2>Library</h2><p>Document, organize, and share knowledge.</p><a href="#library">Browse resources <span>→</span></a></article>
+      <article class="feature-card" id="developer-hub"><img src="assets/mascot-4.png" alt="Alien mascot working on a laptop"><h2>Developer Hub</h2><p>Access API docs, SDKs, and integration guides.</p><a href="#developer-hub">View developer docs <span>→</span></a></article>
+      <article class="feature-card" id="academy"><img src="assets/mascot-5.png" alt="Alien mascot celebrating learning"><h2>Huddlehouse Academy</h2><p>Learn the features, build new skills, and get more out of Huddlehouse.</p><a href="#academy">Start learning <span>→</span></a></article>
+    </section>
+    <div class="bottom-note"><span class="sparkle">✦</span> A connected workspace for teams that build things together. <span class="sparkle">✦</span></div>
+  </main>
+  <footer><span>© 2026 Huddlehouse</span><span>Made for teams who make things together.</span></footer>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#main-nav');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      nav.classList.toggle('is-open', !open);
+    });
+  </script>
+</body>
+</html>
