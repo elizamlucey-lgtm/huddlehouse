@@ -1,82 +1,125 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Huddlehouse is your team's home for projects, knowledge, collaboration, and learning.">
-  <title>Huddlehouse — Good work happens together</title>
+  <meta name="description" content="Explore Huddlehouse, an interactive technical writing portfolio featuring documentation architecture, project simulations, AI-assisted writing, API documentation, and learning experiences.">
+  <title>Huddlehouse — An Interactive Technical Writing Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Huddlehouse home">
-      <span class="brand-mark" aria-hidden="true">✦</span><span>huddlehouse</span>
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span>huddlehouse</span>
     </a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
-    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
-      <a href="#platform">Product <span>⌄</span></a>
-      <a href="#platform">Solutions <span>⌄</span></a>
-      <a href="#academy">Resources <span>⌄</span></a>
-      <a href="#pricing">Pricing</a>
-    </nav>
-    <div class="header-actions">
-      <a class="search" href="#platform" aria-label="Search">⌕</a>
-      <a class="button button-outline small" href="#signin">Sign in</a>
-      <a class="button button-dark small" href="#get-started">Get started free <span>→</span></a>
-    </div>
   </header>
 
   <main id="top">
+
+    <!-- Portfolio Welcome Banner -->
+    <section class="portfolio-welcome" aria-labelledby="welcome-title">
+      <div class="portfolio-welcome-content">
+        <p class="eyebrow">A technical writing portfolio experience</p>
+        <h2 id="welcome-title">Welcome to Huddlehouse!</h2>
+        <p>
+          This is a sample experience created to show how a technical writer
+          can make documentation interesting, approachable, and useful.
+          Feel free to explore the different sections and discover examples of:
+        </p>
+
+        <ul class="portfolio-highlights">
+          <li>Documentation architecture and information design</li>
+          <li>Project simulations and documentation workflows</li>
+          <li>AI-assisted writing, reviews, and quality checks</li>
+          <li>Technical writing style guides and standards</li>
+          <li>API documentation and developer resources</li>
+          <li>Interactive learning and training experiences</li>
+        </ul>
+
+        <p class="portfolio-welcome-note">
+          No boring documentation tours here. Our little alien team is ready
+          to show you around!
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow">A happier place to get things done</p>
         <h1 id="hero-title">Good work<br>happens together.</h1>
-        <p class="hero-description">Your team’s home for projects, knowledge, collaboration, and learning.</p>
+        <p class="hero-description">
+          Your team's home for projects, knowledge, collaboration, and learning.
+        </p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#get-started">Get started free <span>→</span></a>
-          <a class="button button-outline" href="#platform">Explore the platform</a>
+          <a class="button button-dark" href="#platform">
+            Explore Huddlehouse <span>→</span>
+          </a>
+          <a class="button button-outline" href="#platform">
+            Meet the team
+          </a>
         </div>
       </div>
+
       <div class="hero-art">
-        <img src="assets/hero-aliens.png" alt="Friendly little alien teammates collaborating around a shared workspace">
+        <img
+          src="assets/hero-aliens.png"
+          alt="Friendly little alien teammates collaborating around a shared workspace">
       </div>
     </section>
 
-    <section id="platform" class="features" aria-label="Explore the Huddlehouse platform">
+    <!-- Explore the Portfolio -->
+    <section id="platform" class="features" aria-label="Explore the Huddlehouse portfolio">
+
       <article class="feature-card" id="huddle">
         <img src="assets/mascot-1.png" alt="Alien mascot sharing a document">
         <h2>Huddle</h2>
-        <p>Chat, share updates, and keep everyone in sync.</p>
-        <a href="huddle.html">Start collaborating <span>→</span></a>
+        <p>Explore collaboration, team communication, and knowledge sharing.</p>
+        <a href="huddle.html">Explore collaboration <span>→</span></a>
       </article>
 
       <article class="feature-card" id="projects">
         <img src="assets/mascot-2.png" alt="Alien mascot organizing a checklist">
         <h2>Projects</h2>
-        <p>Plan, organize, and track work from idea to launch.</p>
+        <p>
+          Discover documentation planning, project simulations,
+          review workflows, and AI-assisted quality checks.
+        </p>
         <a href="projects.html">Explore projects <span>→</span></a>
       </article>
 
       <article class="feature-card" id="developer-hub">
         <img src="assets/mascot-4.png" alt="Alien mascot working on a laptop">
         <h2>Developer Hub</h2>
-        <p>Access API docs, SDKs, and integration guides.</p>
+        <p>
+          Explore API documentation, developer resources,
+          SDK examples, and integration guides.
+        </p>
         <a href="developer.html">View developer docs <span>→</span></a>
       </article>
 
       <article class="feature-card" id="library">
         <img src="assets/mascot-3.png" alt="Alien mascot reading a book">
         <h2>Library</h2>
-        <p>Document, organize, and share knowledge.</p>
+        <p>
+          Discover how documentation is organized,
+          structured, maintained, and shared.
+        </p>
         <a href="library.html">Browse resources <span>→</span></a>
       </article>
 
       <article class="feature-card" id="academy">
         <img src="assets/mascot-5.png" alt="Alien mascot celebrating learning">
         <h2>Huddlehouse Academy</h2>
-        <p>Learn the features, build new skills, and get more out of Huddlehouse.</p>
+        <p>
+          Explore beginner-friendly lessons, interactive learning,
+          and knowledge checks.
+        </p>
         <a href="academy.html">Start learning <span>→</span></a>
       </article>
+
     </section>
 
     <div class="bottom-note">
@@ -84,22 +127,13 @@
       A connected workspace for teams that build things together.
       <span class="sparkle">✦</span>
     </div>
+
   </main>
 
   <footer>
     <span>© 2026 Huddlehouse</span>
-    <span>Made for teams who make things together.</span>
+    <span>An interactive technical writing portfolio sample.</span>
   </footer>
 
-  <script>
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('#main-nav');
-
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!open));
-      nav.classList.toggle('is-open', !open);
-    });
-  </script>
 </body>
 </html>
